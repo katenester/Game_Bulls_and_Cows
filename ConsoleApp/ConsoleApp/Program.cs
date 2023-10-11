@@ -29,6 +29,11 @@
                 else { Console.WriteLine("Некорректный формат введенных данных."); }  
             }
         }
+        // Метод новой игры
+        public static void NewGame(string userName)
+        {
+            
+        }
         static void Main()
         {
             // Получение текущего времени
@@ -47,15 +52,37 @@
             {
                 Console.WriteLine($"Good {Day.evening}");
             }
-            string UserName= CheckUserName(); // авторизация / регистрация имени произошла успешно.
-            Console.WriteLine("Выберите из списка номер:");
-            Console.WriteLine("1. Загрузка предыдущей игры");
-            Console.WriteLine("2. Создание новой игры");
-            int x = TryInt();
-
-
+            // авторизация / регистрация имени произошла успешно.
+            string UserName = CheckUserName(); 
+            bool flag = true;
+            while (flag)
+            {
+                Console.WriteLine("Выберите номер из списка :");
+                Console.WriteLine("1. Загрузка прошлой игры");
+                Console.WriteLine("2. Создание новой игры");
+                Console.WriteLine("3. Отображение таблицы лучших игроков");
+                Console.WriteLine("0. Выход");
+                int n = TryInt();
+                switch (n)
+                {
+                    case 0:
+                        Console.WriteLine("Закрытие игры");
+                        flag = false;
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        NewGame(UserName);
+                        break;
+                    case 3:
+                        // метод в game вывода таблицы лучших игроков 
+                        Game.BestPlayers();
+                        break;
+                }
+            }
 
 
         }
+
     }
 }
