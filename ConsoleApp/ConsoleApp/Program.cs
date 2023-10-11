@@ -1,4 +1,6 @@
-﻿namespace ConsoleApp
+﻿using System.Security.Cryptography;
+
+namespace ConsoleApp
 {
     enum Day
     {
@@ -25,21 +27,49 @@
             while (true)
             {
                 Console.WriteLine("Введите число:");
-                if (int.TryParse(Console.ReadLine(), out var value)) { return value; } 
-                else { Console.WriteLine("Некорректный формат введенных данных."); }  
+                if (int.TryParse(Console.ReadLine(), out var value)) { return value; }
+                else { Console.WriteLine("Некорректный формат введенных данных."); }
             }
         }
         // Метод новой игры
         public static void NewGame(string userName)
         {
-            
+            int x = Game.HiddenNumber(userName);
+            bool newflag = true;
+            while (newflag)
+            {
+                Console.WriteLine("Выберите номер из списка :");
+                Console.WriteLine("1. Ввести число");
+                // Если пользователь хочет вернуться к этой игре позже 
+                Console.WriteLine("0. Сохранение игры/выход");
+                int n = TryInt();
+                switch (n)
+                {
+                    case 0:
+                        newflag = false;
+                        break;
+                    case 1:
+                        // попытка пользователя отгадать число
+                        int trying = TryInt();
+                        // количество быков
+                        int bull;
+                        //количество коров
+                        int cow;
+                        if (Game.Check(ref bull,ref cow,)
+                }
+            }
+        }
+        // Загрузка текущей игры 
+        public static void OldGame(string userName)
+        {
+
         }
         static void Main()
         {
             // Получение текущего времени
-            DateTime dateTime = new DateTime();
+            DateTime dateTime = DateTime.Now;
             // Получение текущего часа
-            int hour=dateTime.Hour;
+            int hour = dateTime.Hour;
             if (hour > 5 && hour < 12)
             {
                 Console.WriteLine($"Good {Day.morning}");
@@ -47,13 +77,13 @@
             else if (hour >= 12 && hour < 19)
             {
                 Console.WriteLine($"Good {Day.afternoon}");
-            }    
+            }
             else
             {
                 Console.WriteLine($"Good {Day.evening}");
             }
             // авторизация / регистрация имени произошла успешно.
-            string UserName = CheckUserName(); 
+            string UserName = CheckUserName();
             bool flag = true;
             while (flag)
             {
@@ -70,6 +100,7 @@
                         flag = false;
                         break;
                     case 1:
+                        OldGame(UserName);
                         break;
                     case 2:
                         NewGame(UserName);
@@ -78,11 +109,12 @@
                         // метод в game вывода таблицы лучших игроков 
                         Game.BestPlayers();
                         break;
+                    default:
+                        Console.WriteLine("Данный пункт отсутствует. Попробуйте ещё раз:");
+                        break;
+
                 }
             }
-
-
         }
-
     }
 }

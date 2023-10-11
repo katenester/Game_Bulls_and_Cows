@@ -4,6 +4,10 @@ namespace ConsoleApp
 {
     class Game
     {
+        public int number;
+        public int bull;
+        public int cow;
+
         // метод отображения лучших игровов
         public static void BestPlayers()
         {
@@ -14,7 +18,7 @@ namespace ConsoleApp
         {
             
         }
-
+        // метод для создания числа ( здесь компьютер загадывает число). userName нужен для занесения в бд при сохранении незавершенной игры
         public static int HiddenNumber(string userName)
         {
             return 0;
