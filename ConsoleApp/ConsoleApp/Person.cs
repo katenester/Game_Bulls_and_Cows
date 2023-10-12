@@ -13,7 +13,7 @@ namespace ConsoleApp
         afternoon,
         evening,
     }
-    internal class Person
+    class Person
     {
         string userName = "";
         string textGame = "";
@@ -25,21 +25,39 @@ namespace ConsoleApp
         //
         public Person() 
         {
-        //возможно тут будет инициализация 
+            Console.Write("Введите игровое имя: ");
+            string UserName = Console.ReadLine() ?? "";
+            //проверка, что корректно ввёл
+            while (!string.IsNullOrEmpty(UserName))
+            {
+                Console.Write("Имя не может быть пустым. Введите новое игровое имя: ");
+                UserName = Console.ReadLine() ?? "";
+            }
+            userName = UserName;
+            // Проверяем есть ли пользователь в бд
+            if (Game.Check(UserName))
+            {
+                // Если существует -инициализируем пользователя(заполняем все поля)
+                Game.Init(UserName);
+            }
+            else
+            {  
+                // если пользователя нет в бд , то остаются значения по умолчанию (т.е. нули)/.
+                //Переходим в Game для создания нового пользователя в бд 
+                Game.CreateNewUser(UserName);
+            }
+ 
         }
 
         // Авторизация.
         // P.S. тут будет проверка есть ли пользователь в системе, регистрация нового пользователя, авторизация предыдущего
-        public void Init()
-        {
-            Console.Write("Введите игровое имя: ");
-            string UserName = Console.ReadLine(); //сделать проверку, что корректно ввёл
+
+
             //переходим в гейм 
             //проверяем, есть ли пользователь в бд
             //если да, то мы инициалицируем все поля для этого пользователя полями из бд
             //если нет, то закидываем в бд нового пользователя с введенным именем и остальными полями по умолчанию 
             // дописать проверки + что-то сделать с not null - метод isnullorempty 
-        }
 
 
 

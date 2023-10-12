@@ -23,5 +23,21 @@ namespace ConsoleApp
         {
             return 0;
         }
+        // Метод, возвращающий true - если пользователь найден , false - если отсутствует
+        public static bool Check( string UserName)
+        {
+            if (Data.CheckUser(UserName)){ return true; }
+            else return false;
+        }
+        // метод инициализации старого пользователя
+        public static void Init(string userName)
+        {
+            
+        }
+        // метод создания нового пользвоателя в бд
+        public static void CreateNewUser(string UserName)
+        {
+            Data.AddNewUser(UserName);
+        }
     }
 }
