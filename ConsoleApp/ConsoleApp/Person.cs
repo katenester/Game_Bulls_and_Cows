@@ -52,10 +52,39 @@ namespace ConsoleApp
             }
         }
         // Метод новой игры
-        public static void NewGame(string userName)
+        public void NewGame()
         {
-
+            int trial = 1;
+            while (trial != 0)
+            {
+                trial = TryInt();
+                countAttempt += 1;
+                // Проверка совпадает ли введеное пользователем число с секретным.
+                // Мб реализовать проверку сразу тут, но это вроде как логика игры , поэтому ВОПРОСИК
+                int bull, cow;
+                // Считаем количество быков и коров
+                Game.MainGame(trial, number, out bull, out cow);
+                textGame += $"Быков: {bull} Коров: {cow} Попытка: {trial}     +\t";// заменить на пробелы
+                // Если пользователь отгадал число 
+                if (bull == 4)
+                {
+                    // если число отгадано , то пересчитываем рейтинг для пользователя
+                    Console.WriteLine("ПОБЕДА! Число отгадано");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Количество быков: " + bull + "Количество коров : " + cow);
+                }
+            }
+            rating += 1 / countAttempt;
+            // обновляем данные в бд/ сохраняем игру
+            // ПОДУМАТЬ КАК СДЕЛАТЬ ЛУЧШЕ ! ПЯТЬ ПАРАМЕТРОВ ВЫГЛЯДАТ НЕ ОЧЕНЬ
+            string[] info = new string[5] { userName, textGame.ToString(), countAttempt.ToString(), number.ToString(), rating.ToString() };
+            //Обновляем данные 
+            Game.Update(info);
         }
+
         // Получение текущего времени
         public static void Time()
         {
@@ -93,9 +122,18 @@ namespace ConsoleApp
                         flag = false;
                         break;
                     case 1:
+                        // По идеи так, но надо будет подробнее посмотреть на логику и сохранение полей ( не сломалось ли что-то)
+                        NewGame();
                         break;
                     case 2:
-                        //NewGame(UserName);
+                        // ЗАГАДЫВАЕМ ЧИСЛО
+                        number = Game.GeneratingNumber();
+                        Console.WriteLine("Число от 1000 до 9999 загадано");
+                        Console.WriteLine("Введите 0 при сохранении игры");
+                        Console.WriteLine("Игра началась");
+                        textGame = ""; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
+                        countAttempt = 0;
+                        NewGame();
                         break;
                     case 3:
                         // метод в game вывода таблицы лучших игроков 

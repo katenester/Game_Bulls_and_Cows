@@ -4,10 +4,6 @@ namespace ConsoleApp
 {
     class Game
     {
-        public int number;
-        public int bull;
-        public int cow;
-
         // метод отображения лучших игровов
         public static void BestPlayers()
         {
@@ -41,6 +37,23 @@ namespace ConsoleApp
         public static string[] User(string UserName)
         {
             return Data.CheckUser(UserName);
+        }
+        // Метод генерации рандомного числа 
+        public static int GeneratingNumber()
+        {
+            Random random = new Random();
+            int n=random.Next(1000,10000); // генерация рандомного четырехзначного числа 
+            return n;
+        }
+        // Игра быки и коровы . ПРОПИСАТЬ ИГРУ , КОТОРАЯ ВЫЧИСЛЯЕТ КОЛ-ВО БЫКОВ И КОРОВ
+        public static void MainGame(int trial,int number,out int bull, out int cow)
+        {
+            
+        }
+
+        public static void Update(string[] info)
+        {
+            Data.Update(info);
         }
     }
 }

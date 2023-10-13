@@ -60,5 +60,10 @@ namespace ConsoleApp
             }
             sw.Close();
         }
+        // метод обновления данных
+        public static void Update(string[] info)
+        {
+            
+        }
     }
 }
