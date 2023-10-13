@@ -26,16 +26,19 @@ namespace ConsoleApp
         public Person() 
         {
             Console.Write("Введите игровое имя: ");
-            string UserName = Console.ReadLine() ?? "";
+            string UserName = Console.ReadLine() ?? ""; //ЧТО ЭТО ЗА СИНТАКСИС?
             //проверка, что корректно ввёл
-            while (!string.IsNullOrEmpty(UserName))
+            while (string.IsNullOrEmpty(UserName)) //здесь try catch точно не нужен
             {
                 Console.Write("Имя не может быть пустым. Введите новое игровое имя: ");
                 UserName = Console.ReadLine() ?? "";
             }
             userName = UserName;
+
+            //ТУТ ЛОГИКА СЛОМАЛАСЬ
+
             // Проверяем есть ли пользователь в бд
-            if (Game.Check(UserName))
+/*            if (Game.Check(UserName))
             {
                 // Если существует -инициализируем пользователя(заполняем все поля)
                 Game.Init(UserName);
@@ -45,7 +48,7 @@ namespace ConsoleApp
                 // если пользователя нет в бд , то остаются значения по умолчанию (т.е. нули)/.
                 //Переходим в Game для создания нового пользователя в бд 
                 Game.CreateNewUser(UserName);
-            }
+            }*/
  
         }
 
