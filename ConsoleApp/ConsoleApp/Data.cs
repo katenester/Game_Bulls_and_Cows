@@ -14,17 +14,17 @@ namespace ConsoleApp
             string line; //для чтения файла
 
             StreamReader sr = new StreamReader(path);
-            //Читаем первую строчку файла, это нужно, чтобы в цикле дойти до конца файла
-            line = sr.ReadLine();
-            //Пока не дойдём до конца файла или не найдём имя 
-            while ((line != null) && (line != UserName))
+
+            //Пока не дойдём до конца файла или не найдём имя
+            for (int i = 0; (line = sr.ReadLine()) != null; i++)
             {
-                //выводим строку
-                Console.WriteLine(line);
-                //переходим на следующую
-                line = sr.ReadLine();
+                if (i % 5 == 0 && line == UserName)
+                {
+                    // строка является каждой пятой строкой, и она равна "UserName"
+                    break;
+                }
             }
-            
+
             if (line == null) //если пользователя нет
             {
                 info[0] = UserName;
@@ -32,11 +32,8 @@ namespace ConsoleApp
                 {
                     info[i] = "0";
                 }
-                for (int i = 0; i < info.Length; i++)
-                {
-                    Console.WriteLine(info[i]);
-                }
                 sr.Close();
+                AddNewUser(info);// метод добавления нового Пользователя в бд
                 return info;
             }
 
@@ -47,19 +44,21 @@ namespace ConsoleApp
                     info[i] = line;
                     line = sr.ReadLine();
                 }
-                for (int i = 0; i < info.Length; i++)
-                {
-                    Console.WriteLine(info[i]);
-                }
                 sr.Close();
                 return info;
             }
             
         }
         // метод добавления нового Пользователя в бд. Заполняем имя + 4 пустые строки
-        public static void AddNewUser(string UserName)
+        public static void AddNewUser(string[] info)
         {
-
+            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
+            StreamWriter sw = new StreamWriter(path);
+            for (int i = 0; i < info.Length; i++)
+            {
+                sw.WriteLine(info[i]);
+            }
+            sw.Close();
         }
     }
 }

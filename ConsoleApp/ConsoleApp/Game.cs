@@ -31,15 +31,16 @@ namespace ConsoleApp
             //else
             return false;
         }
-        // метод инициализации старого пользователя
+        /*/ метод инициализации старого пользователя
         public static void Init(string userName)
         {
             
         }
-        // метод создания нового пользвоателя в бд
-        public static void CreateNewUser(string UserName)
+        // метод создания нового пользвоателя в бд*/
+        // метод авторизации/ регистрации пользователя 
+        public static string[] User(string UserName)
         {
-            Data.AddNewUser(UserName);
+            return Data.CheckUser(UserName);
         }
     }
 }
