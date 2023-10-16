@@ -45,7 +45,7 @@ namespace ConsoleApp
         public static void AddNewUser(Info info)
         {
             string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
-            StreamWriter sw = new StreamWriter(path);
+            StreamWriter sw = new StreamWriter(path,true); // true добавляем в конструктор, чтобы записовалась в конец файла , а не заменять содержимое
             sw.WriteLine(info.userName);
             sw.WriteLine(info.textGame);
             sw.WriteLine(info.countAttempt);

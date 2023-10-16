@@ -128,7 +128,15 @@ namespace ConsoleApp
                     case 1:
                         // По идеи так, но надо будет подробнее посмотреть на логику и сохранение полей ( не сломалось ли что-то)
                         Console.WriteLine("Загрузка прошлой игры: ");
-                        Console.WriteLine(info.textGame);
+                        // Проверка есть ли сохраненная игра 
+                        if (String.IsNullOrEmpty(info.textGame))
+                        {
+                            Console.WriteLine("Сохраненной игры не найдено. Создайте новую игру");
+                        }
+                        else
+                        {
+                            Console.WriteLine(info.textGame);
+                        }
                         BullsАndCowsGame(ref info);
                         break;
                     case 2:
