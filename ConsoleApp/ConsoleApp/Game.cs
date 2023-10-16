@@ -34,9 +34,9 @@ namespace ConsoleApp
         }
         // метод создания нового пользвоателя в бд*/
         // метод авторизации/ регистрации пользователя 
-        public static string[] User(string UserName)
+        public static void User(ref Info info)
         {
-            return Data.CheckUser(UserName);
+            Data.CheckUser(ref info);
         }
         // Метод генерации рандомного числа 
         public static int GeneratingNumber()
@@ -46,12 +46,12 @@ namespace ConsoleApp
             return n;
         }
         // Игра быки и коровы . ПРОПИСАТЬ ИГРУ , КОТОРАЯ ВЫЧИСЛЯЕТ КОЛ-ВО БЫКОВ И КОРОВ
-        public static void MainGame(int trial,int number,out int bull, out int cow)
+        public static void BullsАndCowsGame(int trial,int number,out int bull, out int cow)
         {
             
         }
 
-        public static void Update(string[] info)
+        public static void Update(Info info)
         {
             Data.Update(info);
         }

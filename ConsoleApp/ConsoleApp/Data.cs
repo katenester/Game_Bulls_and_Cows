@@ -1,4 +1,5 @@
 ﻿using System;
+using ConsoleApp;
 using System.IO;
 
 namespace ConsoleApp
@@ -6,10 +7,9 @@ namespace ConsoleApp
     class Data
     {
 
-        // Метод, возвращающий информацию о пользователе в виде массива ОНО РАБОТАЕТ!!!
-        public static string[] CheckUser(string UserName)
+        // Метод, возвращающий информацию о пользователе в виде структуры ОНО РАБОТАЕТ!!!
+        public static void CheckUser(ref Info info)
         {
-            string[] info = new string[5];
             string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
             string line; //для чтения файла
 
@@ -18,50 +18,43 @@ namespace ConsoleApp
             //Пока не дойдём до конца файла или не найдём имя
             for (int i = 0; (line = sr.ReadLine()) != null; i++)
             {
-                if (i % 5 == 0 && line == UserName)
+                if (i % 5 == 0 && line == info.userName)
                 {
                     // строка является каждой пятой строкой, и она равна "UserName"
                     break;
                 }
             }
-
-            if (line == null) //если пользователя нет
+            //если пользователя нет, то структура остаётся без изменений ( по умолчанию она проинициализируется 0 или null)
+            if (line == null) 
             {
-                info[0] = UserName;
-                for (int i = 1; i<info.Length;i++)
-                {
-                    info[i] = "0";
-                }
                 sr.Close();
                 AddNewUser(info);// метод добавления нового Пользователя в бд
-                return info;
             }
 
             else //если пользователь есть 
-            {
-                for (int i = 0; i < info.Length; i++)
-                {
-                    info[i] = line;
-                    line = sr.ReadLine();
-                }
+            {   //info.userName уже проинициализоривана. В цикле поиска указатель в sr.ReadLine() поставлен на текст игры
+                info.textGame = sr.ReadLine();
+                info.countAttempt = int.Parse(sr.ReadLine());
+                info.number = int.Parse(sr.ReadLine());
+                info.rating = double.Parse(sr.ReadLine());
                 sr.Close();
-                return info;
             }
             
         }
         // метод добавления нового Пользователя в бд. Заполняем имя + 4 пустые строки
-        public static void AddNewUser(string[] info)
+        public static void AddNewUser(Info info)
         {
             string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
             StreamWriter sw = new StreamWriter(path);
-            for (int i = 0; i < info.Length; i++)
-            {
-                sw.WriteLine(info[i]);
-            }
+            sw.WriteLine(info.userName);
+            sw.WriteLine(info.textGame);
+            sw.WriteLine(info.countAttempt);
+            sw.WriteLine(info.number);
+            sw.WriteLine(info.rating);
             sw.Close();
         }
         // метод обновления данных
-        public static void Update(string[] info)
+        public static void Update(Info info)
         {
             
         }

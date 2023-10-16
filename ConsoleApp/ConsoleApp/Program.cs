@@ -8,10 +8,12 @@
             //Console.WriteLine(Data.CheckUser("")); 
             //приветствие
             Person.Time();
+            // Объявление объекта структуры Info
+            Info info = new Info(); 
             // авторизация / регистрация имени произошла успешно.
-            Person person = new();
+            Person person = new(ref info);
             //person.Init();
-            person.Menu();
+            person.Menu(ref info);
         }
 
     }

@@ -1,9 +1,6 @@
 ﻿using ConsoleApp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ConsoleApp
 {
@@ -15,15 +12,10 @@ namespace ConsoleApp
     }
     class Person
     {
-        string userName = "";
-        string textGame = "";
-        int countAttempt = 0;
-        int number = 0;
-        double rating = 0;
-
         //сделать функцию инит, подумать как связать её с конструктором, функции из меню 
         //
-        public Person()
+
+        public Person(ref Info info)
         {
             Console.Write("Введите игровое имя: ");
             string UserName = Console.ReadLine() ?? ""; //ЧТО ЭТО ЗА СИНТАКСИС?
@@ -33,12 +25,12 @@ namespace ConsoleApp
                 Console.Write("Имя не может быть пустым. Введите новое игровое имя: ");
                 UserName = Console.ReadLine() ?? "";
             }
-            string[] info = Game.User(UserName);
-            userName = info[0];
-            textGame = info[1];
-            countAttempt = int.Parse(info[2]);
-            number = int.Parse(info[3]);
-            rating = double.Parse(info[4]);
+
+            // Присваим имя пользователя в структуре
+            info.userName=UserName;
+            // Game.User проиницализирует все поля структуры (т.е. возьмет данные в бд и закинет в структуру).
+            // Ничего не возвращает т.к. мы передадим ссылку (ref )
+            Game.User(ref info);
         }
         // Предлагаю проверку делать тут, чтобы сделать код менее грамоздким и избежать повторения кода
         public static int TryInt()
@@ -51,20 +43,21 @@ namespace ConsoleApp
                 else { Console.WriteLine("Некорректный формат введенных данных."); }
             }
         }
-        // Метод новой игры
-        public void NewGame()
+        // Метод новой/старой игры. 
+        // !!!!Поменяла название NewGame на BullsАndCowsGame т.к. логичнее для всех игр , т.е. не только новая игра , но и загрузка старой
+        public void BullsАndCowsGame(ref Info info)
         {
             int trial = 1;
             while (trial != 0)
             {
                 trial = TryInt();
-                countAttempt += 1;
+                info.countAttempt += 1;
                 // Проверка совпадает ли введеное пользователем число с секретным.
                 // Мб реализовать проверку сразу тут, но это вроде как логика игры , поэтому ВОПРОСИК
                 int bull, cow;
                 // Считаем количество быков и коров
-                Game.MainGame(trial, number, out bull, out cow);
-                textGame += $"Быков: {bull} Коров: {cow} Попытка: {trial}     +\t";// заменить на пробелы
+                Game.BullsАndCowsGame(trial, info.number, out bull, out cow);
+                info.textGame += $"Быков: {bull} Коров: {cow} Попытка: {trial}     +\t";// заменить на пробелы
                 // Если пользователь отгадал число 
                 if (bull == 4)
                 {
@@ -77,11 +70,8 @@ namespace ConsoleApp
                     Console.WriteLine("Количество быков: " + bull + "Количество коров : " + cow);
                 }
             }
-            rating += 1 / countAttempt;
+            info.rating += 1 / info.countAttempt;
             // обновляем данные в бд/ сохраняем игру
-            // ПОДУМАТЬ КАК СДЕЛАТЬ ЛУЧШЕ ! ПЯТЬ ПАРАМЕТРОВ ВЫГЛЯДАТ НЕ ОЧЕНЬ
-            string[] info = new string[5] { userName, textGame.ToString(), countAttempt.ToString(), number.ToString(), rating.ToString() };
-            //Обновляем данные 
             Game.Update(info);
         }
 
@@ -104,7 +94,7 @@ namespace ConsoleApp
                 Console.WriteLine($"Good {Day.evening}!");
             }
         }
-        public void Menu()
+        public void Menu(ref Info info)
         {
             bool flag = true;
             while (flag)
@@ -118,24 +108,29 @@ namespace ConsoleApp
                 switch (n)
                 {
                     case 0:
+                        Console.WriteLine("Выход");
                         Console.WriteLine("Goodbye!");
                         flag = false;
                         break;
                     case 1:
                         // По идеи так, но надо будет подробнее посмотреть на логику и сохранение полей ( не сломалось ли что-то)
-                        NewGame();
+                        Console.WriteLine("Загрузка прошлой игры: ");
+                        Console.WriteLine(info.textGame);
+                        BullsАndCowsGame(ref info);
                         break;
                     case 2:
+                        Console.WriteLine("Создание новой игры");
                         // ЗАГАДЫВАЕМ ЧИСЛО
-                        number = Game.GeneratingNumber();
+                        info.number = Game.GeneratingNumber();
                         Console.WriteLine("Число от 1000 до 9999 загадано");
-                        Console.WriteLine("Введите 0 при сохранении игры");
+                        Console.WriteLine("Введите 0 для завершения игры");
                         Console.WriteLine("Игра началась");
-                        textGame = ""; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
-                        countAttempt = 0;
-                        NewGame();
+                        info.textGame = ""; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
+                        info.countAttempt = 0;
+                        BullsАndCowsGame(ref info);
                         break;
                     case 3:
+                        Console.WriteLine("Таблицы лучших игроков");
                         // метод в game вывода таблицы лучших игроков 
                         Game.BestPlayers();
                         break;
