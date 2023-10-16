@@ -50,13 +50,26 @@ namespace ConsoleApp
             int trial = 1;
             while (trial != 0)
             {
-                trial = TryInt();
+                // проверяем, что число четырехзначное и с уникальными цифрами
+                while (true)
+                {
+                    trial = TryInt();
+                    // если число подходит
+                    if (trial > 999 && trial < 10000 && Game.CheckUnique(trial.ToString()))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Число должно быть четырехзначным с уникальными(неповторяющимися) цифрами ");
+                    }
+                }
+                // новая попытка
                 info.countAttempt += 1;
                 // Проверка совпадает ли введеное пользователем число с секретным.
-                // Мб реализовать проверку сразу тут, но это вроде как логика игры , поэтому ВОПРОСИК
                 int bull, cow;
-                // Считаем количество быков и коров
-                Game.BullsАndCowsGame(trial, info.number, out bull, out cow);
+                // Считаем количество быков и коров. 
+                Game.BullsАndCowsGame(trial.ToString(), info.number.ToString(), out bull, out cow);
                 info.textGame += $"Быков: {bull} Коров: {cow} Попытка: {trial}     +\t";// заменить на пробелы
                 // Если пользователь отгадал число 
                 if (bull == 4)
@@ -122,7 +135,7 @@ namespace ConsoleApp
                         Console.WriteLine("Создание новой игры");
                         // ЗАГАДЫВАЕМ ЧИСЛО
                         info.number = Game.GeneratingNumber();
-                        Console.WriteLine("Число от 1000 до 9999 загадано");
+                        Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны");
                         Console.WriteLine("Введите 0 для завершения игры");
                         Console.WriteLine("Игра началась");
                         info.textGame = ""; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
