@@ -16,7 +16,7 @@ namespace ConsoleApp
             StreamReader sr = new StreamReader(path);
 
             //Пока не дойдём до конца файла или не найдём имя
-            for (int i = 0; (line = sr.ReadLine()) != null; i++)
+            for (int i = 0; (line = sr.ReadLine()) != null; i++) //почему просто нельзя пойти с шагом 5?
             {
                 if (i % 5 == 0 && line == info.userName)
                 {

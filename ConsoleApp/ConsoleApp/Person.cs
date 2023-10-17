@@ -144,11 +144,11 @@ namespace ConsoleApp
                         // ЗАГАДЫВАЕМ ЧИСЛО
                         info.number = Game.GeneratingNumber();
                         Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны");
-                        Console.WriteLine("Введите 0 для завершения игры");
+                        Console.WriteLine("Введите 0 для завершения игры"); //что это и зачем, тут же нигде пользователь ничего не вводит
                         Console.WriteLine("Игра началась");
                         info.textGame = ""; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
                         info.countAttempt = 0;
-                        BullsАndCowsGame(ref info);
+                        BullsАndCowsGame(ref info);  
                         break;
                     case 3:
                         Console.WriteLine("Таблицы лучших игроков");
