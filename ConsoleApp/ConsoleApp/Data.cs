@@ -6,7 +6,7 @@ namespace ConsoleApp
 {
     class Data
     {
-
+        
         // Метод, возвращающий информацию о пользователе в виде структуры ОНО РАБОТАЕТ!!!
         public static void CheckUser(ref Info info)
         {
@@ -57,6 +57,89 @@ namespace ConsoleApp
         public static void Update(Info info)
         {
             
+        }
+
+        public static int Counter() //количество игроков
+        {
+            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
+            string line; //для чтения файла
+
+            StreamReader sr = new StreamReader(path);
+
+            int counter = 0;
+            for (int i = 0; (line = sr.ReadLine()) != null; i++) //почему просто нельзя пойти с шагом 5?
+            {
+                if (i % 5 == 0)
+                {
+                    counter++;
+                }
+            }
+            sr.Close();
+            return counter;
+        }
+        //прописать логику, что делать, если у кого то совпадают рейтинги, если этого не сделать, то всегда будет выводиться игрок, который первый в файлике с заданным рейтингом
+        //(счётчик повторений возможно ввести и если в отсортированном массиве два одиноковых рейтинга подряд,
+        // то первого пользователя в бд с таким рейтингом пропускаем, ищем следующего и добаляем)
+        public static string[,] Rating(string[,] result)
+        {
+            double[] rating = new double[Counter()];  //создать массив и заполнить его рейтингами всех игроков, потом отсортировать его
+
+            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
+            string line; //для чтения файла
+            StreamReader sr = new StreamReader(path);
+
+            int j = 0;
+            //Пока не дойдём до конца файла
+            for (int i = 0; (line = sr.ReadLine()) != null; i++) //почему просто нельзя пойти с шагом 5?
+            {
+                if (i % 5 == 4)
+                {
+                    rating[j] = Convert.ToDouble(line);
+                    j++;
+                }
+            }
+            sr.Close();
+            Array.Sort(rating); //массив рейтингов отсортирован по возрастанию
+            Array.Reverse(rating); //теперь по убыванию
+
+            //дальше берем первый элемент в массиве (максимальный рейтинг) и ищем в бд имя пользователя с таким рейтингом, заносим в наш двумерный массив и тд
+            //только тогда надо продумать логику, что делать, если рейтинги каких-то игроков будут повторяться (счётчик повторений возможно
+            //ввести и если в отсортированном массиве два одиноковых рейтинга подряд, то первого пользователя в бд с таким рейтингом пропускаем, ищем следующего и добаляем)
+            int numberLine = 0;
+            for (int i = 0;i<rating.Length;i++)
+            {
+                numberLine = 0;
+                StreamReader sr1 = new StreamReader(path);
+                for (int k = 0; (line = sr1.ReadLine()) != null; k++) //бежим по файлику и ищем нужный нам рейтинг
+                {
+                    numberLine++; //считаем на какой мы строчке
+                    if (k % 5 == 4 && Convert.ToDouble(line) == rating[i])
+                    {
+/*                        if (i > 0 && rating[i] == rating[i - 1]) НЕ РАБОТАЕТ, в этом случае вообще не находит 
+                        {
+                            //numberLine--; 
+                            continue; //если рейтинги совпадают у кого то
+                        }*/
+                        break; //мы нашли, в какой строке находится нужный нам рейтинг, теперь ищем имя пользователя, которому принадлежит этот рейтинг
+                    }
+                }
+                StreamReader sr2 = new StreamReader(path);
+                numberLine -= 4; //имя пользователя ледит на 4 строки выше
+                int numberLine2 = 0; //для сравнения
+                for (int k = 0; (line = sr2.ReadLine()) != null; k++) //снова бежим по файлику
+                {
+                    numberLine2++; //считаем на какой мы строчке
+                    if (numberLine2 == numberLine) //нашли имя, оно лежит в line
+                    {
+                        
+                        //заполняем двумерный массив
+                        result[i,0] = line; //имя
+                        result[i, 1] = Convert.ToString(rating[i]); //рейтинг
+                        break; //выходим из цикла
+                    }
+                }
+            }
+            return result;
         }
     }
 }

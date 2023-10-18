@@ -151,9 +151,16 @@ namespace ConsoleApp
                         BullsАndCowsGame(ref info);  
                         break;
                     case 3:
-                        Console.WriteLine("Таблицы лучших игроков");
+                        Console.WriteLine("Таблица лучших игроков");
                         // метод в game вывода таблицы лучших игроков 
-                        Game.BestPlayers();
+                        //Game.BestPlayers();
+                        Console.WriteLine("Имя    Рейтинг");
+                        string[,] result = new string[Data.Counter(), 2]; //надо сделать через гейм, а не дату
+                        result = Game.BestPlayers();
+                        for (int i = 0; i< Data.Counter() -1;i++)
+                        {
+                            Console.WriteLine(result[i,0] + "    " + result[i, 1]);
+                        }
                         break;
                 }
             }
