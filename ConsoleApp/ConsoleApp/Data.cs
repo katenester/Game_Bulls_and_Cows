@@ -56,7 +56,7 @@ namespace ConsoleApp
         // метод обновления данных
         public static void Update(Info info)
         {
-
+            Console.WriteLine("");
         }
 
         public static int Counter() //количество игроков
