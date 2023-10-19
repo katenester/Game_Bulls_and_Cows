@@ -48,7 +48,8 @@ namespace ConsoleApp
         public void BullsАndCowsGame(ref Info info)
         {
             int trial = 1;
-            while (trial != 0)
+            bool flag = true;
+            while (flag)
             {
                 // проверяем, что число четырехзначное и с уникальными цифрами
                 while (true)
@@ -59,11 +60,17 @@ namespace ConsoleApp
                     {
                         break;
                     }
+                    else if (trial == 0)
+                    {
+                        flag = false;
+                        break;
+                    }
                     else
                     {
                         Console.WriteLine("Число должно быть четырехзначным с уникальными (неповторяющимися) цифрами");
                     }
                 }
+                if (flag == false) { break; }
                 // новая попытка
                 info.countAttempt += 1;
                 // Проверка совпадает ли введеное пользователем число с секретным.
@@ -83,7 +90,8 @@ namespace ConsoleApp
                     Console.WriteLine("Количество быков: " + bull + "Количество коров : " + cow);
                 }
             }
-            info.rating += 1 / info.countAttempt;
+            // Пересчитываем рейтинг только после полных отградываний слов. Т.е. выход произошел из-за каких ситуаций
+            if (trial != 0) { info.rating += 1 / info.countAttempt; } 
             // обновляем данные в бд/ сохраняем игру
             Game.Update(info);
         }

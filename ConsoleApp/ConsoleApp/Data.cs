@@ -59,9 +59,9 @@ namespace ConsoleApp
         private static void RewriteLine(string path, int lineIndex, string newValue) //путь, индекс строки, которую нужно перезаписать, новое значение
         {
             int i = 0;
-            string tempPath = path + ".tmp";
+            string tempPath = path + ".txt";
             using (StreamReader sr = new StreamReader(path)) // читаем
-            using (StreamWriter sw = new StreamWriter(tempPath, false)) // и сразу же пишем во временный файл ПОПРОБОВАТЬ БЕЗ ФОЛС 
+            using (StreamWriter sw = new StreamWriter(tempPath)) // и сразу же пишем во временный файл ПОПРОБОВАТЬ БЕЗ ФОЛС 
             {
                 while (!sr.EndOfStream)
                 {
@@ -94,6 +94,7 @@ namespace ConsoleApp
                     break; //выходим из цикла
                 }
             }
+            sr.Close();
             RewriteLine(path, numberLine + 1, info.textGame);
             RewriteLine(path, numberLine + 2, (info.countAttempt).ToString());
             RewriteLine(path, numberLine + 3, info.number.ToString());
@@ -147,7 +148,7 @@ namespace ConsoleApp
             //дальше берем первый элемент в массиве (максимальный рейтинг) и ищем в бд имя пользователя с таким рейтингом, заносим в наш двумерный массив и тд
             //только тогда надо продумать логику, что делать, если рейтинги каких-то игроков будут повторяться (счётчик повторений возможно
             //ввести и если в отсортированном массиве два одиноковых рейтинга подряд, то первого пользователя в бд с таким рейтингом пропускаем, ищем следующего и добаляем)
-            int numberLine = 0; //строка, на которой находимся 
+            string name = ""; //имя
             int repeat = 0; //счётчик повторений
             for (int i = 0; i < rating.Length; i++)
             {
@@ -160,11 +161,14 @@ namespace ConsoleApp
                     }
 
                 }
-                numberLine = 0;
+                name = "";
                 StreamReader sr1 = new StreamReader(path);
                 for (int k = 0; (line = sr1.ReadLine()) != null; k++) //бежим по файлику и ищем нужный нам рейтинг
                 {
-                    numberLine++; //считаем на какой мы строчке
+                    if (k % 5 == 0)
+                    {
+                        name = line;// запомнили имя
+                    }
                     if (k % 5 == 4 && Convert.ToDouble(line) == rating[i])
                     {
                         if (repeat > 0)
@@ -172,29 +176,15 @@ namespace ConsoleApp
                             repeat--;
                             continue;
                         }
-                        /*                        if (i > 0 && rating[i] == rating[i - 1]) НЕ РАБОТАЕТ, в этом случае вообще не находит 
-                                                {
-                                                    //numberLine--; 
-                                                    continue; //если рейтинги совпадают у кого то
-                                                }*/
-                        break; //мы нашли, в какой строке находится нужный нам рейтинг, теперь ищем имя пользователя, которому принадлежит этот рейтинг
-                    }
-                }
-                StreamReader sr2 = new StreamReader(path);
-                numberLine -= 4; //имя пользователя ледит на 4 строки выше
-                int numberLine2 = 0; //для сравнения
-                for (int k = 0; (line = sr2.ReadLine()) != null; k++) //снова бежим по файлику
-                {
-                    numberLine2++; //считаем на какой мы строчке
-                    if (numberLine2 == numberLine) //нашли имя, оно лежит в line
-                    {
-
+                        //мы нашли, в какой строке находится нужный нам рейтинг, теперь ищем имя пользователя, которому принадлежит этот рейтинг
                         //заполняем двумерный массив
-                        result[i, 0] = line; //имя
+                        result[i, 0] = name; //имя
                         result[i, 1] = Convert.ToString(rating[i]); //рейтинг
-                        break; //выходим из цикла
+                        break;
                     }
                 }
+                sr1.Close();
+
             }
             return result;
         }
