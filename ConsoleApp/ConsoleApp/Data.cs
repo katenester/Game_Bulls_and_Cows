@@ -83,48 +83,7 @@ namespace ConsoleApp
         //сделать юзинг или трай кетч
         public static string[,] Rating(string[,] result)
         {
-            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
-            string line; //для чтения файла
-            StreamReader sr = new StreamReader(path);
-            int k = 0;
-            //Пока не дойдём до конца файла
-            for (int i = 0; (line = sr.ReadLine()) != null; i++) //почему просто нельзя пойти с шагом 5?
-            {
-                if (i % 5 == 0)
-                {
-                    result[k,0] = line; // 0 столбец - имя . Заполняем имя пользователя 
-                }
-                if (i % 5 == 4)
-                {
-                    result[k,1] = line; // 1 столбец - рейтинг . Заполняем рейтинг пользователя
-                    k++; // переходим к следующей строке. Т.е заполняем данные для другого пользовалътеля 
-                }
-            }
-            // Сортировка пузырьком. Можно для оптимизации взять другую сортировку 
-            int rows = result.GetLength(0); // метод возвращает кол-во строк 
-            for (int i = 0; i < rows - 1; i++)
-            {
-                for (int j = 0; j < rows - 1 - i; j++)
-                {
-                    int rating1 = int.Parse(result[j, 1]);
-                    int rating2 = int.Parse(result[j + 1, 1]);
-
-                    if (rating1 < rating2)
-                    {
-                        // Обмен значений
-                        string tempName = result[j, 0];
-                        string tempRating = result[j, 1];
-                        result[j, 0] = result[j + 1, 0];
-                        result[j, 1] = result[j + 1, 1];
-                        result[j + 1, 0] = tempName;
-                        result[j + 1, 1] = tempRating;
-                    }
-                }
-            }
-            return result;
-
-
-            /*double[] rating = new double[Counter()];  //создать массив и заполнить его рейтингами всех игроков, потом отсортировать его
+            double[] rating = new double[Counter()];  //создать массив и заполнить его рейтингами всех игроков, потом отсортировать его
 
             string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
             string line; //для чтения файла
@@ -143,21 +102,29 @@ namespace ConsoleApp
             sr.Close();
             Array.Sort(rating); //массив рейтингов отсортирован по возрастанию
             Array.Reverse(rating); //теперь по убыванию
-            for (int i=0;i< rating.Length; i++)
-            {
-                result[i, 1] = rating[i].ToString();
-            }
+
             //дальше берем первый элемент в массиве (максимальный рейтинг) и ищем в бд имя пользователя с таким рейтингом, заносим в наш двумерный массив и тд
             //только тогда надо продумать логику, что делать, если рейтинги каких-то игроков будут повторяться (счётчик повторений возможно
             //ввести и если в отсортированном массиве два одиноковых рейтинга подряд, то первого пользователя в бд с таким рейтингом пропускаем, ищем следующего и добаляем)
-            int numberLine = 0;
-            for (int i = 0;i<rating.Length;i++)
+            int numberLine = 0; //строка, на которой находимся 
+            int repeat = 0; //счётчик повторений
+            for (int i = 0; i < rating.Length; i++)
             {
+                if (i > 0 && rating[i] == rating[i - 1]) //если одинаковый рейтинг у кого-то
+                {
+                    for (int l = i; l != 0; l--)
+                    {
+                        if (rating[l] == rating[l - 1]) repeat++; // 5 4 4 4
+                        else break;
+                    }
+
+                }
                 numberLine = 0;
                 StreamReader sr1 = new StreamReader(path);
                 for (int k = 0; (line = sr1.ReadLine()) != null; k++) //бежим по файлику и ищем нужный нам рейтинг
                 {
-                    if (k % 5 == 0)
+                    numberLine++; //считаем на какой мы строчке
+                    if (k % 5 == 4 && Convert.ToDouble(line) == rating[i])
                     {
                         if (repeat > 0)
                         {
@@ -180,16 +147,15 @@ namespace ConsoleApp
                     numberLine2++; //считаем на какой мы строчке
                     if (numberLine2 == numberLine) //нашли имя, оно лежит в line
                     {
-                        
+
                         //заполняем двумерный массив
-                        result[i,0] = line; //имя
+                        result[i, 0] = line; //имя
                         result[i, 1] = Convert.ToString(rating[i]); //рейтинг
                         break; //выходим из цикла
                     }
-                } 
+                }
             }
-            return result;*/
-
+            return result;
         }
     }
 }
