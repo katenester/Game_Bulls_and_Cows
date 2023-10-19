@@ -1,6 +1,7 @@
 ﻿using System;
 using ConsoleApp;
 using System.IO;
+using System.Linq;
 
 namespace ConsoleApp
 {
@@ -56,7 +57,10 @@ namespace ConsoleApp
         // метод обновления данных
         public static void Update(Info info)
         {
-            
+            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
+            string line; //для чтения файла
+            StreamReader sr = new StreamReader(path);
+            StreamWriter sw = new StreamWriter(path, true);
         }
 
         public static int Counter() //количество игроков
@@ -82,7 +86,48 @@ namespace ConsoleApp
         // то первого пользователя в бд с таким рейтингом пропускаем, ищем следующего и добаляем)
         public static string[,] Rating(string[,] result)
         {
-            double[] rating = new double[Counter()];  //создать массив и заполнить его рейтингами всех игроков, потом отсортировать его
+            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
+            string line; //для чтения файла
+            StreamReader sr = new StreamReader(path);
+            int k = 0;
+            //Пока не дойдём до конца файла
+            for (int i = 0; (line = sr.ReadLine()) != null; i++) //почему просто нельзя пойти с шагом 5?
+            {
+                if (i % 5 == 0)
+                {
+                    result[k,0] = line; // 0 столбец - имя . Заполняем имя пользователя 
+                }
+                if (i % 5 == 4)
+                {
+                    result[k,1] = line; // 1 столбец - рейтинг . Заполняем рейтинг пользователя
+                    k++; // переходим к следующей строке. Т.е заполняем данные для другого пользовалътеля 
+                }
+            }
+            // Сортировка пузырьком. Можно для оптимизации взять другую сортировку 
+            int rows = result.GetLength(0); // метод возвращает кол-во строк 
+            for (int i = 0; i < rows - 1; i++)
+            {
+                for (int j = 0; j < rows - 1 - i; j++)
+                {
+                    int rating1 = int.Parse(result[j, 1]);
+                    int rating2 = int.Parse(result[j + 1, 1]);
+
+                    if (rating1 < rating2)
+                    {
+                        // Обмен значений
+                        string tempName = result[j, 0];
+                        string tempRating = result[j, 1];
+                        result[j, 0] = result[j + 1, 0];
+                        result[j, 1] = result[j + 1, 1];
+                        result[j + 1, 0] = tempName;
+                        result[j + 1, 1] = tempRating;
+                    }
+                }
+            }
+            return result;
+
+
+            /*double[] rating = new double[Counter()];  //создать массив и заполнить его рейтингами всех игроков, потом отсортировать его
 
             string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
             string line; //для чтения файла
@@ -92,6 +137,7 @@ namespace ConsoleApp
             //Пока не дойдём до конца файла
             for (int i = 0; (line = sr.ReadLine()) != null; i++) //почему просто нельзя пойти с шагом 5?
             {
+
                 if (i % 5 == 4)
                 {
                     rating[j] = Convert.ToDouble(line);
@@ -119,7 +165,7 @@ namespace ConsoleApp
                         {
                             //numberLine--; 
                             continue; //если рейтинги совпадают у кого то
-                        }*/
+                        }*/ /*
                         break; //мы нашли, в какой строке находится нужный нам рейтинг, теперь ищем имя пользователя, которому принадлежит этот рейтинг
                     }
                 }
@@ -139,7 +185,8 @@ namespace ConsoleApp
                     }
                 }
             }
-            return result;
+            return result;*/
+
         }
     }
 }
