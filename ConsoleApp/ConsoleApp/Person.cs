@@ -18,7 +18,7 @@ namespace ConsoleApp
         public Person(ref Info info)
         {
             Console.Write("Введите имя для игры: ");
-            string UserName = Console.ReadLine() ?? ""; //ЧТО ЭТО ЗА СИНТАКСИС? - Это означает что мы допускаем значение "" (т.е. если в cw ничего не введено(т.е. null), то переменная = "" ( а не null)
+            string UserName = Console.ReadLine(); //ЧТО ЭТО ЗА СИНТАКСИС? - Это означает что мы допускаем значение "" (т.е. если в cw ничего не введено(т.е. null), то переменная = "" ( а не null)
             //проверка, что корректно ввёл
             while (string.IsNullOrEmpty(UserName)) //здесь try catch точно не нужен
             {
@@ -77,7 +77,7 @@ namespace ConsoleApp
                 int bull, cow;
                 // Считаем количество быков и коров. 
                 Game.BullsАndCowsGame(trial.ToString(), info.number.ToString(), out bull, out cow);
-                info.textGame += $"Быков: {bull} Коров: {cow} Попытка: {trial}     +\t";// заменить на пробелы
+                info.textGame += $"Быков: {bull} Коров: {cow} Попытка: {trial};";// заменить на пробелы
                 // Если пользователь отгадал число 
                 if (bull == 4)
                 {
@@ -91,7 +91,7 @@ namespace ConsoleApp
                 }
             }
             // Пересчитываем рейтинг только после полных отградываний слов. Т.е. выход произошел из-за каких ситуаций
-            if (trial != 0) { info.rating += 1 / info.countAttempt; } 
+            if (trial != 0) { info.rating += (double)1 / info.countAttempt; } 
             // обновляем данные в бд/ сохраняем игру
             Game.Update(info);
         }

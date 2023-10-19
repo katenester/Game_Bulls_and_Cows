@@ -56,7 +56,7 @@ namespace ConsoleApp
         }
 
         //метод для перезаписи строки, Перед этим нужно создать папку temp на диске С и в ней блокнот 2.txt ИЛИ НЕ НУЖНО
-        private static void RewriteLine(string path, int lineIndex, Info info) //путь, индекс строки, которую нужно перезаписать, новое значение
+        private static void RewriteLine(string path, int lineIndex, string newValue) //путь, индекс строки, которую нужно перезаписать, новое значение
         {
             int i = 0;
             string tempPath = path + ".txt";
@@ -67,16 +67,7 @@ namespace ConsoleApp
                 {
                     string line = sr.ReadLine();
                     if (lineIndex == i)
-                    {
-                        sw.WriteLine(info.textGame); // записываем новые данные
-                        sw.WriteLine(info.countAttempt);
-                        sw.WriteLine(info.number);
-                        sw.WriteLine(info.rating);
-                        line = sr.ReadLine(); // переносим указатель чтения 
-                        line = sr.ReadLine();
-                        line = sr.ReadLine();
-                        line = sr.ReadLine();
-                    }
+                        sw.WriteLine(newValue);
                     else
                         sw.WriteLine(line);
                     i++;
@@ -97,14 +88,17 @@ namespace ConsoleApp
             int numberLine = 0; //для сравнения
             for (int k = 0; (line = sr.ReadLine()) != null; k++) //бежим по файлику
             {
-                numberLine++; //считаем на какой мы строчке
                 if (line == info.userName) //нашли имя, оно лежит в line
                 {
                     break; //выходим из цикла
                 }
+                numberLine++; //считаем на какой мы строчке
             }
             sr.Close();
-            RewriteLine(path, numberLine + 1,info);
+            RewriteLine(path, numberLine + 1, info.textGame);
+            RewriteLine(path, numberLine + 2, (info.countAttempt).ToString());
+            RewriteLine(path, numberLine + 3, info.number.ToString());
+            RewriteLine(path, numberLine + 4, info.rating.ToString());
         }
 
         public static int Counter() //количество игроков
