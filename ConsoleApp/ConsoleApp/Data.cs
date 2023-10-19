@@ -41,6 +41,7 @@ namespace ConsoleApp
             }
 
         }
+
         // метод добавления нового Пользователя в бд. Заполняем имя + 4 пустые строки
         public static void AddNewUser(Info info)
         {
@@ -53,10 +54,50 @@ namespace ConsoleApp
             sw.WriteLine(info.rating);
             sw.Close();
         }
+
+        //метод для перезаписи строки, Перед этим нужно создать папку temp на диске С и в ней блокнот 2.txt ИЛИ НЕ НУЖНО
+        private static void RewriteLine(string path, int lineIndex, string newValue) //путь, индекс строки, которую нужно перезаписать, новое значение
+        {
+            int i = 0;
+            string tempPath = path + ".tmp";
+            using (StreamReader sr = new StreamReader(path)) // читаем
+            using (StreamWriter sw = new StreamWriter(tempPath, false)) // и сразу же пишем во временный файл ПОПРОБОВАТЬ БЕЗ ФОЛС 
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    if (lineIndex == i)
+                        sw.WriteLine(newValue);
+                    else
+                        sw.WriteLine(line);
+                    i++;
+                }
+            }
+            File.Delete(path); // удаляем старый файл
+            File.Move(tempPath, path); // переименовываем временный файл
+        }
+
         // метод обновления данных
         public static void Update(Info info)
         {
-            Console.WriteLine("");
+            //для начало находим номер строки, где лежит имя пользователя
+            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
+            string line; //для чтения файла
+
+            StreamReader sr = new StreamReader(path);
+            int numberLine = 0; //для сравнения
+            for (int k = 0; (line = sr.ReadLine()) != null; k++) //бежим по файлику
+            {
+                numberLine++; //считаем на какой мы строчке
+                if (line == info.userName) //нашли имя, оно лежит в line
+                {
+                    break; //выходим из цикла
+                }
+            }
+            RewriteLine(path, numberLine + 1, info.textGame);
+            RewriteLine(path, numberLine + 2, (info.countAttempt).ToString());
+            RewriteLine(path, numberLine + 3, info.number.ToString());
+            RewriteLine(path, numberLine + 4, info.rating.ToString());
         }
 
         public static int Counter() //количество игроков
