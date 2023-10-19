@@ -17,12 +17,12 @@ namespace ConsoleApp
 
         public Person(ref Info info)
         {
-            Console.Write("Введите игровое имя: ");
+            Console.Write("Введите имя для игры: ");
             string UserName = Console.ReadLine() ?? ""; //ЧТО ЭТО ЗА СИНТАКСИС? - Это означает что мы допускаем значение "" (т.е. если в cw ничего не введено(т.е. null), то переменная = "" ( а не null)
             //проверка, что корректно ввёл
             while (string.IsNullOrEmpty(UserName)) //здесь try catch точно не нужен
             {
-                Console.Write("Имя не может быть пустым. Введите новое игровое имя: ");
+                Console.Write("Имя не может быть пустым. Введите новое имя для игры: ");
                 UserName = Console.ReadLine() ?? "";
             }
 
@@ -61,7 +61,7 @@ namespace ConsoleApp
                     }
                     else
                     {
-                        Console.WriteLine("Число должно быть четырехзначным с уникальными(неповторяющимися) цифрами ");
+                        Console.WriteLine("Число должно быть четырехзначным с уникальными (неповторяющимися) цифрами");
                     }
                 }
                 // новая попытка
@@ -112,40 +112,40 @@ namespace ConsoleApp
             bool flag = true;
             while (flag)
             {
-                Console.WriteLine("Выберите номер из списка :");
-                Console.WriteLine("1. Загрузка прошлой игры");
-                Console.WriteLine("2. Создание новой игры");
-                Console.WriteLine("3. Отображение таблицы лучших игроков");
-                Console.WriteLine("0. Выход");
+                Console.WriteLine("Выберите номер из списка:");
+                Console.WriteLine("1. Продолжить незаконченную игру");
+                Console.WriteLine("2. Создать новую игру");
+                Console.WriteLine("3. Отобразить таблицу лучших игроков");
+                Console.WriteLine("0. Выйти");
                 int n = TryInt();
                 switch (n)
                 {
                     case 0:
-                        Console.WriteLine("Выход");
+                        Console.WriteLine("Вы выбрали выйти из игры.");
                         Console.WriteLine("Goodbye!");
                         flag = false;
                         break;
                     case 1:
                         // По идеи так, но надо будет подробнее посмотреть на логику и сохранение полей ( не сломалось ли что-то)
-                        Console.WriteLine("Загрузка прошлой игры: ");
+                        Console.WriteLine("Вы выбрали продолжить незаконченную игру.");
                         // Проверка есть ли сохраненная игра 
                         if (String.IsNullOrEmpty(info.textGame))
                         {
-                            Console.WriteLine("Сохраненной игры не найдено. Создайте новую игру");
+                            Console.WriteLine("Незаконченной игры не найдено. Создайте новую игру.");
                         }
                         else
                         {
                             Console.WriteLine(info.textGame);
+                            BullsАndCowsGame(ref info);
                         }
-                        BullsАndCowsGame(ref info);
                         break;
                     case 2:
                         Console.WriteLine("Создание новой игры");
                         // ЗАГАДЫВАЕМ ЧИСЛО
                         info.number = Game.GeneratingNumber();
-                        Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны");
-                        Console.WriteLine("Введите 0 для завершения игры"); //что это и зачем, тут же нигде пользователь ничего не вводит
-                        Console.WriteLine("Игра началась");
+                        Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны.");
+                        Console.WriteLine("Введите 0 для завершения игры."); //что это и зачем, тут же нигде пользователь ничего не вводит
+                        Console.WriteLine("Игра началась!");
                         info.textGame = ""; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
                         info.countAttempt = 0;
                         BullsАndCowsGame(ref info);  
