@@ -18,7 +18,7 @@ namespace ConsoleApp
         public Person(ref Info info)
         {
             Console.Write("Введите игровое имя: ");
-            string UserName = Console.ReadLine() ?? ""; //ЧТО ЭТО ЗА СИНТАКСИС?
+            string UserName = Console.ReadLine() ?? ""; //ЧТО ЭТО ЗА СИНТАКСИС? - Это означает что мы допускаем значение "" (т.е. если в cw ничего не введено(т.е. null), то переменная = "" ( а не null)
             //проверка, что корректно ввёл
             while (string.IsNullOrEmpty(UserName)) //здесь try catch точно не нужен
             {
