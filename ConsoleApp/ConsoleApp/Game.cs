@@ -68,5 +68,10 @@ namespace ConsoleApp
         {
             Data.Update(info);
         }
+
+        public static int Counter() 
+        {
+            return Data.Counter();
+        }
     }
 }
