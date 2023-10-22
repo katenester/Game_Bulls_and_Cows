@@ -4,17 +4,13 @@
     {
         static void Main()
         {
-            //Data.CheckUser("a");
-            //Console.WriteLine(Data.CheckUser("")); 
-            //приветствие
+            // Приветствие.
             Person.Time();
-            // Объявление объекта структуры Info
+            // Объявление объекта структуры Info.
             Info info = new Info(); 
-            // авторизация / регистрация имени произошла успешно.
+            // Инициализация пользователя.
             Person person = new(ref info);
-            //person.Init();
             person.Menu(ref info);
         }
-
     }
 }

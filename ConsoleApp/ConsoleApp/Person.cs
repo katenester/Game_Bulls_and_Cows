@@ -10,20 +10,18 @@ namespace ConsoleApp
         afternoon,
         evening,
     }
+
     class Person
     {
-        //сделать функцию инит, подумать как связать её с конструктором, функции из меню 
-        //
-
         public Person(ref Info info)
         {
             Console.Write("Введите имя для игры: ");
-            string UserName = Console.ReadLine(); //ЧТО ЭТО ЗА СИНТАКСИС? - Это означает что мы допускаем значение "" (т.е. если в cw ничего не введено(т.е. null), то переменная = "" ( а не null)
-            //проверка, что корректно ввёл
-            while (string.IsNullOrEmpty(UserName)) //здесь try catch точно не нужен
+            string UserName = Console.ReadLine();
+            //Проверка, что имя не пустое.
+            while (string.IsNullOrEmpty(UserName))
             {
                 Console.Write("Имя не может быть пустым. Введите новое имя для игры: ");
-                UserName = Console.ReadLine() ?? "";
+                UserName = Console.ReadLine();
             }
 
             // Присваим имя пользователя в структуре
