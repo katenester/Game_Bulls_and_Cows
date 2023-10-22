@@ -77,19 +77,19 @@ namespace ConsoleApp
                 int bull, cow;
                 // Считаем количество быков и коров. 
                 Game.BullsАndCowsGame(trial.ToString(), info.number.ToString(), out bull, out cow);
-                info.textGame += $"Быков: {bull} Коров: {cow} Попытка: {trial};";// заменить на пробелы
+                info.textGame += $"Попытка: {trial} Быков: {bull} Коров: {cow}; ";// заменить на пробелы
                 // Если пользователь отгадал число 
                 if (bull == 4)
                 {
                     // если число отгадано , то пересчитываем рейтинг для пользователя
                     Console.WriteLine("ПОБЕДА! Число отгадано");
                     info.textGame = "";
-                    info.rating += (double)1 / info.countAttempt; //перенесла эту строчку сюда, так кажется логичнее
+                    info.rating += (double)1 / info.countAttempt; //перенесла эту строчку сюда, так кажется логичнее, зачем здесь дабл
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Количество быков: " + bull + "Количество коров : " + cow);
+                    Console.WriteLine("Количество быков: " + bull + " Количество коров: " + cow);
                 }
             }
             // Пересчитываем рейтинг только после полных отградываний слов. Т.е. выход произошел из-за каких ситуаций
@@ -121,7 +121,7 @@ namespace ConsoleApp
             bool flag = true;
             while (flag)
             {
-                Console.WriteLine("Выберите номер из списка:");
+                Console.WriteLine("Выберите номер из списка, что вы хотите сделать:");
                 Console.WriteLine("1. Продолжить незаконченную игру");
                 Console.WriteLine("2. Создать новую игру");
                 Console.WriteLine("3. Отобразить таблицу лучших игроков");
@@ -130,7 +130,7 @@ namespace ConsoleApp
                 switch (n)
                 {
                     case 0:
-                        Console.WriteLine("Вы выбрали выйти из игры.");
+                        Console.WriteLine("Вы выбрали выйти из игры. Игра сохранена!");
                         Console.WriteLine("Goodbye!");
                         flag = false;
                         break;
@@ -144,7 +144,13 @@ namespace ConsoleApp
                         }
                         else
                         {
-                            Console.WriteLine(info.textGame);
+                            Console.WriteLine("Введите 0 для завершения игры.");
+                            string text = info.textGame;
+                            for (int i = 0; i < text.Length; i++)
+                            {
+                                if (text[i] == ';') Console.WriteLine("");
+                                else Console.Write(text[i]);
+                            }
                             BullsАndCowsGame(ref info);
                         }
                         break;
