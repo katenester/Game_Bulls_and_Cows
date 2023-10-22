@@ -83,6 +83,8 @@ namespace ConsoleApp
                 {
                     // если число отгадано , то пересчитываем рейтинг для пользователя
                     Console.WriteLine("ПОБЕДА! Число отгадано");
+                    info.textGame = "";
+                    info.rating += (double)1 / info.countAttempt; //перенесла эту строчку сюда, так кажется логичнее
                     break;
                 }
                 else
@@ -91,7 +93,6 @@ namespace ConsoleApp
                 }
             }
             // Пересчитываем рейтинг только после полных отградываний слов. Т.е. выход произошел из-за каких ситуаций
-            if (trial != 0) { info.rating += (double)1 / info.countAttempt; } 
             // обновляем данные в бд/ сохраняем игру
             Game.Update(info);
         }
@@ -152,9 +153,9 @@ namespace ConsoleApp
                         // ЗАГАДЫВАЕМ ЧИСЛО
                         info.number = Game.GeneratingNumber();
                         Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны.");
-                        Console.WriteLine("Введите 0 для завершения игры."); //что это и зачем, тут же нигде пользователь ничего не вводит
+                        Console.WriteLine("Введите 0 для завершения игры."); 
                         Console.WriteLine("Игра началась!");
-                        info.textGame = ""; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
+                        info.textGame = "Игра: "; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
                         info.countAttempt = 0;
                         BullsАndCowsGame(ref info);  
                         break;
