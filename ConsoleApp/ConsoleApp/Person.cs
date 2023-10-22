@@ -77,7 +77,7 @@ namespace ConsoleApp
                 int bull, cow;
                 // Считаем количество быков и коров. 
                 Game.BullsАndCowsGame(trial.ToString(), info.number.ToString(), out bull, out cow);
-                info.textGame += $"Попытка: {trial} Быков: {bull} Коров: {cow}; ";// заменить на пробелы
+                info.textGame += $"Попытка: {trial} Быков: {bull} Коров: {cow};";// заменить на пробелы
                 // Если пользователь отгадал число 
                 if (bull == 4)
                 {
@@ -161,7 +161,7 @@ namespace ConsoleApp
                         Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны.");
                         Console.WriteLine("Введите 0 для завершения игры."); 
                         Console.WriteLine("Игра началась!");
-                        info.textGame = "Игра: "; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
+                        info.textGame = "Сохранённая игра: "; // обнуляем текст и кол-во попыток (для нового слова новый текст и новое кол-во попыток)
                         info.countAttempt = 0;
                         BullsАndCowsGame(ref info);  
                         break;
