@@ -170,6 +170,9 @@ namespace ConsoleApp
                             Console.WriteLine(result[i,0] + "    " + result[i, 1]);
                         }
                         break;
+                    default:
+                        Console.WriteLine("Такого пункта не существует, попробуйте ещё раз.");
+                        break;
                 }
             }
         }
