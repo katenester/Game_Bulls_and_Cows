@@ -4,8 +4,16 @@
     {
         static void Main()
         {
+            string bull = @"
+             (__)
+             (oo)
+       /------\/
+      / |    ||
+     *  ||----||
+        ^^    ^^";
             // Приветствие.
             Person.Time();
+            Console.WriteLine(bull);
             // Объявление объекта структуры Info.
             Info info = new Info(); 
             // Инициализация пользователя.
