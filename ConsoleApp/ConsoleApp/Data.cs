@@ -6,33 +6,35 @@ namespace ConsoleApp
 {
     class Data
     {
-
-        // Метод, возвращающий информацию о пользователе в виде структуры ОНО РАБОТАЕТ!!!
+        /// <summary>
+        /// Метод инициализации структуры.
+        /// </summary>
+        /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
         public static void CheckUser(ref Info info)
         {
-            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
-            string line; //для чтения файла
-
+            // Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt.
+            string path = @"c:\temp\1.txt"; 
+            string line; 
             StreamReader sr = new StreamReader(path);
-
-            //Пока не дойдём до конца файла или не найдём имя
-            for (int i = 0; (line = sr.ReadLine()) != null; i++) //почему просто нельзя пойти с шагом 5?
+            // Пока не дойдём до конца файла или не найдём имя читаем файл построчно.
+            for (int i = 0; (line = sr.ReadLine()) != null; i++) 
             {
                 if (i % 5 == 0 && line == info.userName)
                 {
-                    // строка является каждой пятой строкой, и она равна "UserName"
+                    // Строка является каждой пятой строкой, и она равна "UserName".
                     break;
                 }
             }
-            //если пользователя нет, то структура остаётся без изменений ( по умолчанию она проинициализируется 0 или null)
+            // Если пользователя нет в бд, то добавляем его и инициализируем поля.
             if (line == null)
             {
                 sr.Close();
-                AddNewUser(info);// метод добавления нового Пользователя в бд
+                AddNewUser(info);
             }
-
-            else //если пользователь есть 
-            {   //info.userName уже проинициализоривана. В цикле поиска указатель в sr.ReadLine() поставлен на текст игры
+            // Если пользователь есть в бд.
+            else
+            {   
+                // Поле info.userName уже проинициализоривано. В цикле поиска указатель в sr.ReadLine() поставлен на текст игры.
                 info.textGame = sr.ReadLine();
                 info.countAttempt = int.Parse(sr.ReadLine());
                 info.number = int.Parse(sr.ReadLine());
@@ -42,11 +44,15 @@ namespace ConsoleApp
 
         }
 
-        // метод добавления нового Пользователя в бд. Заполняем имя + 4 пустые строки
+        /// <summary>
+        /// Метод добавления нового пользователя в бд. Добавляем имя + 4 пустые строки (в действительности для вэлью типов записывается 0).
+        /// </summary>
+        /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
         public static void AddNewUser(Info info)
         {
-            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
-            StreamWriter sw = new StreamWriter(path, true); // true добавляем в конструктор, чтобы записовалась в конец файла , а не заменять содержимое
+            string path = @"c:\temp\1.txt";
+            // Добавляем true, чтобы информация записывалась в конец файла, а не заменяла содержимое.
+            StreamWriter sw = new StreamWriter(path, true); 
             sw.WriteLine(info.userName);
             sw.WriteLine(info.textGame);
             sw.WriteLine(info.countAttempt);
@@ -55,8 +61,13 @@ namespace ConsoleApp
             sw.Close();
         }
 
-        //метод для перезаписи строки, Перед этим нужно создать папку temp на диске С и в ней блокнот 2.txt ИЛИ НЕ НУЖНО
-        private static void RewriteLine(string path, int lineIndex, string newValue) //путь, индекс строки, которую нужно перезаписать, новое значение
+        /// <summary>
+        /// Метод для перезаписи строки.
+        /// </summary>
+        /// <param name="path">Путь к файлу (бд).</param>
+        /// <param name="lineIndex">Индекс строки, которую нужно заменить.</param>
+        /// <param name="newValue">Новое значение строки.</param>
+        private static void RewriteLine(string path, int lineIndex, string newValue) 
         {
             int i = 0;
             string tempPath = path + ".txt";
