@@ -15,11 +15,11 @@ namespace ConsoleApp
             // Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt.
             string path = @"c:\temp\1.txt"; 
             string line; 
-            StreamReader sr = new StreamReader(path);
+            StreamReader sr = new(path);
             // Пока не дойдём до конца файла или не найдём имя читаем файл построчно.
-            for (int i = 0; (line = sr.ReadLine()) != null; i++) 
+            for (var i = 0; (line = sr.ReadLine()) != null; i++) 
             {
-                if (i % 5 == 0 && line == info.userName)
+                if ((i % 5 == 0) && (line == info.userName))
                 {
                     // Строка является каждой пятой строкой, и она равна "UserName".
                     break;
@@ -52,7 +52,7 @@ namespace ConsoleApp
         {
             string path = @"c:\temp\1.txt";
             // Добавляем true, чтобы информация записывалась в конец файла, а не заменяла содержимое.
-            StreamWriter sw = new StreamWriter(path, true); 
+            StreamWriter sw = new(path, true); 
             sw.WriteLine(info.userName);
             sw.WriteLine(info.textGame);
             sw.WriteLine(info.countAttempt);
@@ -72,8 +72,8 @@ namespace ConsoleApp
             int i = 0;
             string tempPath = path + ".txt";
             // Чтение файла.
-            using (StreamReader sr = new StreamReader(path)) 
-            using (StreamWriter sw = new StreamWriter(tempPath)) 
+            using (StreamReader sr = new(path)) 
+            using (StreamWriter sw = new(tempPath)) 
             {
                 while (!sr.EndOfStream)
                 {
@@ -101,10 +101,10 @@ namespace ConsoleApp
             string path = @"c:\temp\1.txt";
             // Строка для чтения.
             string line; 
-            StreamReader sr = new StreamReader(path);
+            StreamReader sr = new(path);
             // Номер строки, на которой находится программа.
-            int numberLine = 0; 
-            for (int k = 0; (line = sr.ReadLine()) != null; k++) 
+            var numberLine = 0; 
+            for (var k = 0; (line = sr.ReadLine()) != null; k++) 
             {
                 //Поиск игрового имени пользователя.
                 if (line == info.userName) 
@@ -133,16 +133,13 @@ namespace ConsoleApp
         public static int Counter() 
         {
             string path = @"c:\temp\1.txt";
-            // Строка для чтения.
-            string line;
-            StreamReader sr = new StreamReader(path);
+            StreamReader sr = new(path);
             int counter = 0;
-            for (int i = 0; (line = sr.ReadLine()) != null; i++)
+            for (var i = 0; (sr.ReadLine()) != null; i++)
             {
-                
                 if (i % 5 == 0)
                 {
-                    // Строка является каждой пятой строкой, т.е. она является игровым именем пользователя.
+                    // Строка является каждой пятой строкой и игровым именем пользователя.
                     counter++;
                 }
             }
@@ -154,7 +151,8 @@ namespace ConsoleApp
         /// Метод для составления таблицы лучших игроков.
         /// </summary>
         /// <param name="result">Двухмерный массив для заполнения игровых имен и рейтингов игроков.</param>
-        /// <returns>Двухмерный массив, состоящий из имен и соответствующего рейтинга игровов, в порядке убывания рейтинга.</returns>
+        /// <returns>Двухмерный массив, состоящий из имен и соответствующего рейтинга игровов,
+        /// в порядке убывания рейтинга.</returns>
         public static string[,] Rating(string[,] result)
         {
             //Создание одномерного массива с рейтингами всех игроков.
@@ -162,11 +160,11 @@ namespace ConsoleApp
             string path = @"c:\temp\1.txt";
             // Строка для чтения.
             string line; 
-            StreamReader sr = new StreamReader(path);
+            StreamReader sr = new(path);
             // Номер текущего игрока.
-            int j = 0;
+            var j = 0;
             //Цикл работает ,пока не конец файла.
-            for (int i = 0; (line = sr.ReadLine()) != null; i++)
+            for (var i = 0; (line = sr.ReadLine()) != null; i++)
             {
                 if (i % 5 == 4)
                 {
@@ -180,16 +178,14 @@ namespace ConsoleApp
             Array.Sort(rating);
             // Массив рейтингов отсортирован по убыванию.
             Array.Reverse(rating); 
-            // Имя пользователя.
-            string name = "";
             // Счётчик повторений.
-            int repeat = 0; 
-            for (int i = 0; i < rating.Length; i++)
+            var repeat = 0; 
+            for (var i = 0; i < rating.Length; i++)
             {
-                if (i > 0 && rating[i] == rating[i - 1]) 
+                if ((i > 0) && (rating[i] == rating[i - 1])) 
                 {
                     // Если присутствует одинаковый рейтинг.
-                    for (int l = i; l != 0; l--)
+                    for (var l = i; l != 0; l--)
                     {
                         // Считаем количество повторов этого рейтинга до текущего.
                         if (rating[l] == rating[l - 1]) repeat++; 
@@ -197,17 +193,18 @@ namespace ConsoleApp
                     }
 
                 }
-                name = "";
-                StreamReader sr1 = new StreamReader(path);
+                // Имя пользователя.
+                string name = "";
+                StreamReader sr1 = new(path);
                 // Цикл для поиска текущего рейтинга.
-                for (int k = 0; (line = sr1.ReadLine()) != null; k++) 
+                for (var k = 0; (line = sr1.ReadLine()) != null; k++) 
                 {
                     if (k % 5 == 0)
                     {
                         // Запоминание игрового имени.
                         name = line;
                     }
-                    if (k % 5 == 4 && Convert.ToDouble(line) == rating[i])
+                    if ((k % 5 == 4) && (Convert.ToDouble(line) == rating[i]))
                     {
                         if (repeat > 0)
                         {

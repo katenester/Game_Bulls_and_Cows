@@ -14,7 +14,7 @@
             Console.Write("Введите имя для игры: ");
             string UserName = Console.ReadLine();
             // Проверка, что имя не пустое и не содержит более 30 символов.
-            while (string.IsNullOrEmpty(UserName) || UserName.Length > 30)
+            while ((string.IsNullOrEmpty(UserName)) || (UserName.Length > 30))
             {
                 Console.Write("Имя пустое или содежит более 30 символов. Введите новое имя для игры: ");
                 UserName = Console.ReadLine();
@@ -32,7 +32,6 @@
         /// <returns>Возвращает число, которое ввёл пользователь.</returns>
         public static int TryInt()
         {
-            bool flag = true;
             int num;
             while (true)
             {
@@ -40,7 +39,6 @@
                 {
                     Console.WriteLine("Введите число:");
                     num = int.Parse(Console.ReadLine());
-                    flag = false;
                     return num;
                 }
                 catch(FormatException)
@@ -57,16 +55,17 @@
         public void BullsАndCowsGame(ref Info info)
         {
             // Это число, которое вводит пользователь.
-            int trial = 1;
-            bool flag = true;
+            int trial;
+            var flag = true;
             while (flag)
             {
                 // Пока пользователь не ввёдет 0 или попытку для игры.
                 while (true)
                 {
+                    // Это число, которое вводит пользователь.
                     trial = TryInt();
                     // Проверяем, что число четырехзначное и с уникальными цифрами. Если это так, выходим из цикла.
-                    if (trial > 999 && trial < 10000 && Game.CheckUnique(trial.ToString()))
+                    if ((trial > 999) && (trial < 10000) && (Game.CheckUnique(trial.ToString())))
                     {
                         break;
                     }
@@ -83,9 +82,7 @@
                 }
                 // Если пользователь ввёл 0: выходим в меню, дальше код не читается.
                 if (flag == false) { break; }
-
-                // Если пользователь ввёл попытку.
-                // Увеличиваем количество попыток на 1.
+                // Если пользователь ввёл попытку, то увеличиваем количество попыток на 1.
                 info.countAttempt += 1;
                 // Проверка совпадает ли введеное пользователем число с секретным.
                 int bull, cow;
@@ -107,7 +104,7 @@
                 else
                 {
                     // Выводим количество быков и коров в числе пользователя.
-                    Console.WriteLine("Количество быков: " + bull + " Количество коров: " + cow);
+                    Console.WriteLine($"Количество быков: {bull} +  Количество коров: {cow}");
                 }
             }
             // Обновляем данные о пользователе в бд.
@@ -138,7 +135,7 @@
 
         public void Menu(ref Info info)
         {
-            bool flag = true;
+            var flag = true;
             while (flag)
             {
                 Console.WriteLine("Выберите номер из списка, что вы хотите сделать:");
@@ -167,7 +164,7 @@
                             Console.WriteLine("Введите 0 для завершения игры.");
                             // Выводим текст сохранённой игры.
                             string text = info.textGame;
-                            for (int i = 0; i < text.Length; i++)
+                            for (var i = 0; i < text.Length; i++)
                             {
                                 if (text[i] == ';') Console.WriteLine("");
                                 else Console.Write(text[i]);
@@ -195,12 +192,10 @@
                         //Ограничение 30 символов на столбец, чтобы таблица красиво выводилась.
                         Console.Write("{0, -30}", "Имя");
                         Console.WriteLine("{0, -30}", "Рейтинг");
-                        // Объявляем двумерный массив.
-                        string[,] result = new string[Game.Counter(), 2];
-                        // Инициализируем двумерный массив.
-                        result = Game.BestPlayers();
+                        // Объявляем и инициализируем двумерный массив.
+                        string[,] result = Game.BestPlayers(); 
                         // Выводим таблицу.
-                        for (int i = 0; i< Game.Counter();i++)
+                        for (var i = 0; i< Game.Counter();i++)
                         {
                             Console.Write("{0, -30}", result[i, 0]);
                             Console.WriteLine("{0, -30}", Math.Round(Convert.ToDouble(result[i, 1]), 3));

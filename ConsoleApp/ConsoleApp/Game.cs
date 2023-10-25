@@ -32,7 +32,7 @@ namespace ConsoleApp
         /// <returns>Рандомное четырехзначное число.</returns>
         public static int GeneratingNumber()
         {
-            Random random = new Random();
+            Random random = new();
             int n;
             while (true)
             {
@@ -67,7 +67,7 @@ namespace ConsoleApp
             bull = 0;
             cow = 0;
             // Проход по строке, состоящей из цифр загаданного числа.
-            for (int i = 0; i < 4; i++) 
+            for (var i = 0; i < 4; i++) 
             {
                 // При полном совпадении цифры загаданного числа с числом, введенным пользователем прибавляем число быков.
                 if (trial[i] == number[i])
