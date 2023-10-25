@@ -1,9 +1,4 @@
-﻿using ConsoleApp;
-using System;
-using static System.Net.Mime.MediaTypeNames;
-
-
-namespace ConsoleApp
+﻿namespace ConsoleApp
 {
     enum Day
     {
@@ -18,28 +13,37 @@ namespace ConsoleApp
         {
             Console.Write("Введите имя для игры: ");
             string UserName = Console.ReadLine();
-            //Проверка, что имя не пустое.
+            // Проверка, что имя не пустое и не содержит более 30 символов.
             while (string.IsNullOrEmpty(UserName) || UserName.Length > 30)
             {
-                Console.Write("Имя пустое или содежит больше 30 символов. Введите новое имя для игры: ");
+                Console.Write("Имя пустое или содежит более 30 символов. Введите новое имя для игры: ");
                 UserName = Console.ReadLine();
             }
-
-            // Присваим имя пользователя в структуре
+            // Присваим имя пользователя в структуре.
             info.userName=UserName;
             // Game.User проиницализирует все поля структуры (т.е. возьмет данные в бд и закинет в структуру).
-            // Ничего не возвращает т.к. мы передадим ссылку (ref )
+            // Функция ничего не возвращает т.к. мы передаём ссылку на структуру (ref).
             Game.User(ref info);
         }
-        // Предлагаю проверку делать тут, чтобы сделать код менее грамоздким и избежать повторения кода
+
+        // Проверка, что пользователь ввёл число. 
         public static int TryInt()
         {
-            // мб следует сделать через try catch
+            bool flag = true;
+            int num;
             while (true)
             {
-                Console.WriteLine("Введите число:");
-                if (int.TryParse(Console.ReadLine(), out var value)) { return value; }
-                else { Console.WriteLine("Некорректный формат введенных данных."); }
+                try
+                {
+                    Console.WriteLine("Введите число:");
+                    num = int.Parse(Console.ReadLine());
+                    flag = false;
+                    return num;
+                }
+                catch(FormatException)
+                {
+                    Console.WriteLine("Некорректный формат введенных данных.");
+                }
             }
         }
         // Метод новой/старой игры. 
