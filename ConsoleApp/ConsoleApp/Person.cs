@@ -1,5 +1,6 @@
 ﻿using ConsoleApp;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace ConsoleApp
@@ -18,9 +19,9 @@ namespace ConsoleApp
             Console.Write("Введите имя для игры: ");
             string UserName = Console.ReadLine();
             //Проверка, что имя не пустое.
-            while (string.IsNullOrEmpty(UserName))
+            while (string.IsNullOrEmpty(UserName) || UserName.Length > 30)
             {
-                Console.Write("Имя не может быть пустым. Введите новое имя для игры: ");
+                Console.Write("Имя пустое или содежит больше 30 символов. Введите новое имя для игры: ");
                 UserName = Console.ReadLine();
             }
 
@@ -164,15 +165,18 @@ namespace ConsoleApp
                         BullsАndCowsGame(ref info);  
                         break;
                     case 3:
-                        Console.WriteLine("Таблица лучших игроков"); //попробовать сделать адекватный вывод 
+                        Console.WriteLine("Таблица лучших игроков"); 
                         // метод в game вывода таблицы лучших игроков 
                         //Game.BestPlayers();
-                        Console.WriteLine("Имя" + '\t' + '\t' + "Рейтинг");
+                        Console.Write("{0, -30}", "Имя"); //ограничение 30 символов, добавила проверку 
+                        Console.WriteLine("{0, -30}", "Рейтинг");
                         string[,] result = new string[Game.Counter(), 2]; 
                         result = Game.BestPlayers();
                         for (int i = 0; i< Game.Counter();i++)
                         {
-                            Console.WriteLine(result[i,0] + '\t' + '\t' + result[i, 1]);
+                            Console.Write("{0, -30}", result[i, 0]);
+                            Console.WriteLine("{0, -30}", Math.Round(Convert.ToDouble(result[i, 1]), 3));
+                            //Console.WriteLine(result[i,0] + '\t' + '\t' + Math.Round(Convert.ToDouble(result[i, 1]), 3));
                         }
                         break;
                     default:
