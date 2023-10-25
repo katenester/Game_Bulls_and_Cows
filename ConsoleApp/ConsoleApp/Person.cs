@@ -1,10 +1,13 @@
-﻿namespace ConsoleApp
+﻿using System;
+
+namespace ConsoleApp
 {
     enum Day
     {
-        morning,
-        afternoon,
-        evening,
+        Morning,
+        Afternoon,
+        Evening,
+        Night
     }
 
     class Person
@@ -119,17 +122,37 @@
             DateTime dateTime = DateTime.Now;
             // Получение текущего часа
             int hour = dateTime.Hour;
+            Day dayTime;
             if (hour > 5 && hour < 12)
             {
-                Console.WriteLine($"Good {Day.morning}!");
+                dayTime = Day.Morning;
             }
-            else if (hour >= 12 && hour < 19)
+            else if (hour >= 12 && hour < 17)
             {
-                Console.WriteLine($"Good {Day.afternoon}!");
+                dayTime = Day.Afternoon;
+            }
+            else if (hour >= 17 && hour < 23)
+            {
+                dayTime = Day.Evening;
             }
             else
             {
-                Console.WriteLine($"Good {Day.evening}!");
+                dayTime = Day.Night;
+            }
+            switch (dayTime)
+            {
+                case Day.Morning:
+                    Console.WriteLine("Доброе утро");
+                    break;
+                case Day.Afternoon:
+                    Console.WriteLine("Добрый день");
+                    break;
+                case Day.Evening:
+                    Console.WriteLine("Добрый вечер");
+                    break;
+                case Day.Night:
+                    Console.WriteLine("Доброй ночи");
+                    break;
             }
         }
 
@@ -148,7 +171,7 @@
                 {
                     case 0:
                         Console.WriteLine("Вы выбрали выйти из игры. Игра сохранена!");
-                        Console.WriteLine("Goodbye!");
+                        Console.WriteLine("До свидания!");
                         flag = false;
                         break;
                     case 1:
