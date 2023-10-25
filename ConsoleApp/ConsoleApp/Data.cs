@@ -45,7 +45,7 @@ namespace ConsoleApp
         }
 
         /// <summary>
-        /// Метод добавления нового пользователя в бд. Добавляем имя + 4 пустые строки (в действительности для вэлью типов записывается 0).
+        /// Метод добавления нового пользователя в бд. Добавляем имя + 4 пустые строки (для value type записывается 0).
         /// </summary>
         /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
         public static void AddNewUser(Info info)
@@ -71,11 +71,13 @@ namespace ConsoleApp
         {
             int i = 0;
             string tempPath = path + ".txt";
-            using (StreamReader sr = new StreamReader(path)) // читаем
-            using (StreamWriter sw = new StreamWriter(tempPath)) // и сразу же пишем во временный файл ПОПРОБОВАТЬ БЕЗ ФОЛС 
+            // Чтение файла.
+            using (StreamReader sr = new StreamReader(path)) 
+            using (StreamWriter sw = new StreamWriter(tempPath)) 
             {
                 while (!sr.EndOfStream)
                 {
+                    // Чтение строки из файла.
                     string line = sr.ReadLine();
                     if (lineIndex == i)
                         sw.WriteLine(newValue);
@@ -84,101 +86,126 @@ namespace ConsoleApp
                     i++;
                 }
             }
-            File.Delete(path); // удаляем старый файл
-            File.Move(tempPath, path); // переименовываем временный файл
+            // Удаление старого файла.
+            File.Delete(path);
+            // Переименовывание временного файла.
+            File.Move(tempPath, path); 
         }
 
-        // метод обновления данных
+        /// <summary>
+        /// Метод обновления информации о пользователе в бд.
+        /// </summary>
+        /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
         public static void Update(Info info)
         {
-            //для начало находим номер строки, где лежит имя пользователя
-            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
-            string line; //для чтения файла
-
+            string path = @"c:\temp\1.txt";
+            // Строка для чтения.
+            string line; 
             StreamReader sr = new StreamReader(path);
-            int numberLine = 0; //для сравнения
-            for (int k = 0; (line = sr.ReadLine()) != null; k++) //бежим по файлику
+            // Номер строки, на которой находится программа.
+            int numberLine = 0; 
+            for (int k = 0; (line = sr.ReadLine()) != null; k++) 
             {
-                if (line == info.userName) //нашли имя, оно лежит в line
+                //Поиск игрового имени пользователя.
+                if (line == info.userName) 
                 {
-                    break; //выходим из цикла
+                    // Выход из цикла.
+                    break; 
                 }
-                numberLine++; //считаем на какой мы строчке
+                // Счёт номера строки.
+                numberLine++;
             }
             sr.Close();
+            // Обновление текста игры.
             RewriteLine(path, numberLine + 1, info.textGame);
+            // Обновление количества попыток.
             RewriteLine(path, numberLine + 2, (info.countAttempt).ToString());
+            // Обновление загаданного числа.
             RewriteLine(path, numberLine + 3, info.number.ToString());
+            // Обновление рейтинга.
             RewriteLine(path, numberLine + 4, info.rating.ToString());
         }
 
-        public static int Counter() //количество игроков
+        /// <summary>
+        /// Метод подсчёта количества игроков в базе данных
+        /// </summary>
+        /// <returns>Количество игроков в базе данных.</returns>
+        public static int Counter() 
         {
-            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
-            string line; //для чтения файла
-
+            string path = @"c:\temp\1.txt";
+            // Строка для чтения.
+            string line;
             StreamReader sr = new StreamReader(path);
-
             int counter = 0;
             for (int i = 0; (line = sr.ReadLine()) != null; i++)
             {
+                
                 if (i % 5 == 0)
                 {
+                    // Строка является каждой пятой строкой, т.е. она является игровым именем пользователя.
                     counter++;
                 }
             }
             sr.Close();
             return counter;
         }
-        //прописать логику, что делать, если у кого то совпадают рейтинги, если этого не сделать, то всегда будет выводиться игрок, который первый в файлике с заданным рейтингом
-        //(счётчик повторений возможно ввести и если в отсортированном массиве два одиноковых рейтинга подряд,
-        // то первого пользователя в бд с таким рейтингом пропускаем, ищем следующего и добаляем)
-        //сделать юзинг или трай кетч
+
+        /// <summary>
+        /// Метод для составления таблицы лучших игроков.
+        /// </summary>
+        /// <param name="result">Двухмерный массив для заполнения игровых имен и рейтингов игроков.</param>
+        /// <returns>Двухмерный массив, состоящий из имен и соответствующего рейтинга игровов, в порядке убывания рейтинга.</returns>
         public static string[,] Rating(string[,] result)
         {
-            double[] rating = new double[Counter()];  //создать массив и заполнить его рейтингами всех игроков, потом отсортировать его
-
-            string path = @"c:\temp\1.txt"; //Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt
-            string line; //для чтения файла
+            //Создание одномерного массива с рейтингами всех игроков.
+            double[] rating = new double[Counter()]; 
+            string path = @"c:\temp\1.txt";
+            // Строка для чтения.
+            string line; 
             StreamReader sr = new StreamReader(path);
-
+            // Номер текущего игрока.
             int j = 0;
-            //Пока не дойдём до конца файла
-            for (int i = 0; (line = sr.ReadLine()) != null; i++) //почему просто нельзя пойти с шагом 5?
+            //Цикл работает ,пока не конец файла.
+            for (int i = 0; (line = sr.ReadLine()) != null; i++)
             {
                 if (i % 5 == 4)
                 {
+                    // Строка является рейтигом.
                     rating[j] = Convert.ToDouble(line);
                     j++;
                 }
             }
             sr.Close();
-            Array.Sort(rating); //массив рейтингов отсортирован по возрастанию
-            Array.Reverse(rating); //теперь по убыванию
-
-            //дальше берем первый элемент в массиве (максимальный рейтинг) и ищем в бд имя пользователя с таким рейтингом, заносим в наш двумерный массив и тд
-            //только тогда надо продумать логику, что делать, если рейтинги каких-то игроков будут повторяться (счётчик повторений возможно
-            //ввести и если в отсортированном массиве два одиноковых рейтинга подряд, то первого пользователя в бд с таким рейтингом пропускаем, ищем следующего и добаляем)
-            string name = ""; //имя
-            int repeat = 0; //счётчик повторений
+            // Массив рейтингов отсортирован по возрастанию.
+            Array.Sort(rating);
+            // Массив рейтингов отсортирован по убыванию.
+            Array.Reverse(rating); 
+            // Имя пользователя.
+            string name = "";
+            // Счётчик повторений.
+            int repeat = 0; 
             for (int i = 0; i < rating.Length; i++)
             {
-                if (i > 0 && rating[i] == rating[i - 1]) //если одинаковый рейтинг у кого-то
+                if (i > 0 && rating[i] == rating[i - 1]) 
                 {
+                    // Если присутствует одинаковый рейтинг.
                     for (int l = i; l != 0; l--)
                     {
-                        if (rating[l] == rating[l - 1]) repeat++; // 5 4 4 4
+                        // Считаем количество повторов этого рейтинга до текущего.
+                        if (rating[l] == rating[l - 1]) repeat++; 
                         else break;
                     }
 
                 }
                 name = "";
                 StreamReader sr1 = new StreamReader(path);
-                for (int k = 0; (line = sr1.ReadLine()) != null; k++) //бежим по файлику и ищем нужный нам рейтинг
+                // Цикл для поиска текущего рейтинга.
+                for (int k = 0; (line = sr1.ReadLine()) != null; k++) 
                 {
                     if (k % 5 == 0)
                     {
-                        name = line;// запомнили имя
+                        // Запоминание игрового имени.
+                        name = line;
                     }
                     if (k % 5 == 4 && Convert.ToDouble(line) == rating[i])
                     {
@@ -187,15 +214,14 @@ namespace ConsoleApp
                             repeat--;
                             continue;
                         }
-                        //мы нашли, в какой строке находится нужный нам рейтинг, теперь ищем имя пользователя, которому принадлежит этот рейтинг
-                        //заполняем двумерный массив
-                        result[i, 0] = name; //имя
-                        result[i, 1] = Convert.ToString(rating[i]); //рейтинг
+                        // Запись игрового имени с текущим рейтингом.
+                        result[i, 0] = name;
+                        // Запись текущего рейтинга.
+                        result[i, 1] = Convert.ToString(rating[i]); 
                         break;
                     }
                 }
                 sr1.Close();
-
             }
             return result;
         }

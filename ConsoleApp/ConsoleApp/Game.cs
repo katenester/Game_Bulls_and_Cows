@@ -20,7 +20,7 @@ namespace ConsoleApp
         /// <summary>
         /// Метод для авторизации/авторизации пользователя.
         /// </summary>
-        /// <param name="info">Структура данных о пользователе.</param>
+        /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
         public static void User(ref Info info)
         {
             Data.CheckUser(ref info);
@@ -83,6 +83,11 @@ namespace ConsoleApp
 
             } 
         }
+
+        /// <summary>
+        /// Обновление данных.
+        /// </summary>
+        /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
         public static void Update(Info info) 
         {
             Data.Update(info);
