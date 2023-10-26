@@ -127,7 +127,7 @@ namespace ConsoleApp
         }
 
         /// <summary>
-        /// Метод подсчёта количества игроков в базе данных
+        /// Метод подсчёта количества игроков в базе данных.
         /// </summary>
         /// <returns>Количество игроков в базе данных.</returns>
         public static int Counter() 
