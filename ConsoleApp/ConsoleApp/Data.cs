@@ -1,8 +1,4 @@
-﻿using System;
-using ConsoleApp;
-using System.IO;
-
-namespace ConsoleApp
+﻿namespace ConsoleApp
 {
     class Data
     {
