@@ -15,7 +15,7 @@
             Person.Time();
             Console.WriteLine(bull);
             // Объявление объекта структуры Info.
-            Info info = new Info(); 
+            Info info = new (); 
             // Инициализация пользователя.
             Person person = new(ref info);
             person.Menu(ref info);

@@ -2,14 +2,14 @@
 {
     public struct Info
     {
-        public string? userName { get; set; } 
+        public string userName { get; set; } 
 
-        public string? textGame { get; set; }
+        public string textGame { get; set; }
 
-        public int countAttempt { get; set; }
+        public int CountAttempt { get; set; }
 
-        public int number { get; set; }
+        public int Number { get; set; }
 
-        public double rating { get; set; }
+        public double Rating { get; set; }
     }
 }
