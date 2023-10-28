@@ -10,7 +10,7 @@
         {
             // Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt.
             string path = @"c:\temp\1.txt"; 
-            string line; 
+            string? line; 
             StreamReader sr = new(path);
             // Пока не дойдём до конца файла или не найдём имя читаем файл построчно.
             for (var i = 0; (line = sr.ReadLine()) != null; i++) 
@@ -32,9 +32,9 @@
             {   
                 // Поле info.userName уже проинициализоривано. В цикле поиска указатель в sr.ReadLine() поставлен на текст игры.
                 info.textGame = sr.ReadLine();
-                info.countAttempt = int.Parse(sr.ReadLine());
-                info.number = int.Parse(sr.ReadLine());
-                info.rating = double.Parse(sr.ReadLine());
+                info.countAttempt = int.Parse(sr.ReadLine() ?? "");
+                info.number = int.Parse(sr.ReadLine() ?? "");
+                info.rating = double.Parse(sr.ReadLine() ?? "");
                 sr.Close();
             }
 
@@ -74,7 +74,7 @@
                 while (!sr.EndOfStream)
                 {
                     // Чтение строки из файла.
-                    string line = sr.ReadLine();
+                    string line = sr.ReadLine() ?? "";
                     if (lineIndex == i)
                         sw.WriteLine(newValue);
                     else
@@ -100,7 +100,7 @@
             StreamReader sr = new(path);
             // Номер строки, на которой находится программа.
             var numberLine = 0; 
-            for (var k = 0; (line = sr.ReadLine()) != null; k++) 
+            for (var k = 0; (line = sr.ReadLine() ?? "") != null; k++) 
             {
                 //Поиск игрового имени пользователя.
                 if (line == info.userName) 
@@ -113,7 +113,7 @@
             }
             sr.Close();
             // Обновление текста игры.
-            RewriteLine(path, numberLine + 1, info.textGame);
+            RewriteLine(path, numberLine + 1, info.textGame ?? "");
             // Обновление количества попыток.
             RewriteLine(path, numberLine + 2, (info.countAttempt).ToString());
             // Обновление загаданного числа.
@@ -160,7 +160,7 @@
             // Номер текущего игрока.
             var j = 0;
             //Цикл работает ,пока не конец файла.
-            for (var i = 0; (line = sr.ReadLine()) != null; i++)
+            for (var i = 0; (line = sr.ReadLine() ?? "") != null; i++)
             {
                 if (i % 5 == 4)
                 {
@@ -193,7 +193,7 @@
                 string name = "";
                 StreamReader sr1 = new(path);
                 // Цикл для поиска текущего рейтинга.
-                for (var k = 0; (line = sr1.ReadLine()) != null; k++) 
+                for (var k = 0; (line = sr1.ReadLine() ?? "") != null; k++) 
                 {
                     if (k % 5 == 0)
                     {

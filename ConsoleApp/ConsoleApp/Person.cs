@@ -13,7 +13,7 @@
         public Person(ref Info info)
         {
             Console.Write("Введите имя для игры: ");
-            string UserName = Console.ReadLine();
+            string? UserName = Console.ReadLine();
             // Проверка, что имя не пустое и не содержит более 30 символов.
             while ((string.IsNullOrEmpty(UserName)) || (UserName.Length > 30))
             {
@@ -39,7 +39,7 @@
                 try
                 {
                     Console.WriteLine("Введите число:");
-                    num = int.Parse(Console.ReadLine());
+                    num = int.Parse(Console.ReadLine() ?? "");
                     return num;
                 }
                 catch(FormatException)
