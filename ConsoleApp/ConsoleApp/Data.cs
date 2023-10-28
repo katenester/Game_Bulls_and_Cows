@@ -15,7 +15,7 @@
             // Пока не дойдём до конца файла или не найдём имя читаем файл построчно.
             for (var i = 0; (line = sr.ReadLine()) != null; i++) 
             {
-                if ((i % 5 == 0) && (line == info.userName))
+                if ((i % 5 == 0) && (line == info.UserName))
                 {
                     // Строка является каждой пятой строкой, и она равна "UserName".
                     break;
@@ -31,10 +31,10 @@
             else
             {   
                 // Поле info.userName уже проинициализоривано. В цикле поиска указатель в sr.ReadLine() поставлен на текст игры.
-                info.textGame = sr.ReadLine();
-                info.countAttempt = int.Parse(sr.ReadLine());
-                info.number = int.Parse(sr.ReadLine());
-                info.rating = double.Parse(sr.ReadLine());
+                info.TextGame = sr.ReadLine();
+                info.CountAttempt = int.Parse(sr.ReadLine());
+                info.Number = int.Parse(sr.ReadLine());
+                info.Rating = double.Parse(sr.ReadLine());
                 sr.Close();
             }
 
@@ -49,11 +49,11 @@
             string path = @"c:\temp\1.txt";
             // Добавляем true, чтобы информация записывалась в конец файла, а не заменяла содержимое.
             StreamWriter sw = new(path, true); 
-            sw.WriteLine(info.userName);
-            sw.WriteLine(info.textGame);
-            sw.WriteLine(info.countAttempt);
-            sw.WriteLine(info.number);
-            sw.WriteLine(info.rating);
+            sw.WriteLine(info.UserName);
+            sw.WriteLine(info.TextGame);
+            sw.WriteLine(info.CountAttempt);
+            sw.WriteLine(info.Number);
+            sw.WriteLine(info.Rating);
             sw.Close();
         }
 
@@ -103,7 +103,7 @@
             for (var k = 0; (line = sr.ReadLine()) != null; k++) 
             {
                 //Поиск игрового имени пользователя.
-                if (line == info.userName) 
+                if (line == info.UserName) 
                 {
                     // Выход из цикла.
                     break; 
@@ -113,13 +113,13 @@
             }
             sr.Close();
             // Обновление текста игры.
-            RewriteLine(path, numberLine + 1, info.textGame);
+            RewriteLine(path, numberLine + 1, info.TextGame);
             // Обновление количества попыток.
-            RewriteLine(path, numberLine + 2, (info.countAttempt).ToString());
+            RewriteLine(path, numberLine + 2, (info.CountAttempt).ToString());
             // Обновление загаданного числа.
-            RewriteLine(path, numberLine + 3, info.number.ToString());
+            RewriteLine(path, numberLine + 3, info.Number.ToString());
             // Обновление рейтинга.
-            RewriteLine(path, numberLine + 4, info.rating.ToString());
+            RewriteLine(path, numberLine + 4, info.Rating.ToString());
         }
 
         /// <summary>

@@ -21,7 +21,7 @@
                 UserName = Console.ReadLine();
             }
             // Присваим имя пользователя в структуре.
-            info.userName=UserName;
+            info.UserName=UserName;
             // Game.User проиницализирует все поля структуры (т.е. возьмет данные в бд и закинет в структуру).
             // Функция ничего не возвращает т.к. мы передаём ссылку на структуру (ref).
             Game.User(ref info);
@@ -84,21 +84,20 @@
                 // Если пользователь ввёл 0: выходим в меню, дальше код не читается.
                 if (flag == false) { break; }
                 // Если пользователь ввёл попытку, то увеличиваем количество попыток на 1.
-                info.countAttempt += 1;
+                info.CountAttempt += 1;
                 // Проверка совпадает ли введеное пользователем число с секретным.
-                int bull, cow;
                 // Считаем количество быков и коров. 
-                Game.BullsАndCowsGame(trial.ToString(), info.number.ToString(), out bull, out cow);
+                Game.BullsАndCowsGame(trial.ToString(), info.Number.ToString(), out int bull, out int cow);
                 // Для сохранения (при необходимости) запоминаем текст игры.
-                info.textGame += $"Попытка: {trial} Быков: {bull} Коров: {cow};";
+                info.TextGame += $"Попытка: {trial} Быков: {bull} Коров: {cow};";
                 // Если пользователь отгадал число.
                 if (bull == 4)
                 {
                     Console.WriteLine("ПОБЕДА! Число отгадано.");
                     // Обнуляем текст игры.
-                    info.textGame = "";
+                    info.TextGame = "";
                     // Пересчитываем рейтинг и выходим.
-                    info.rating += (double)1 / info.countAttempt; 
+                    info.Rating += (double)1 / info.CountAttempt; 
                     break;
                 }
                 // Если пользователь не отгадал число.
@@ -175,7 +174,7 @@
                     case 1:
                         Console.WriteLine("Вы выбрали продолжить незаконченную игру.");
                         // Проверка, есть ли сохраненная игра.
-                        if (string.IsNullOrEmpty(info.textGame))
+                        if (string.IsNullOrEmpty(info.TextGame))
                         {
                             Console.WriteLine("Незаконченной игры не найдено. Создайте новую игру.");
                         }
@@ -184,7 +183,7 @@
                         {
                             Console.WriteLine("Введите 0 для завершения игры.");
                             // Выводим текст сохранённой игры.
-                            string text = info.textGame;
+                            string text = info.TextGame;
                             for (var i = 0; i < text.Length; i++)
                             {
                                 if (text[i] == ';') Console.WriteLine("");
@@ -197,14 +196,14 @@
                     case 2:
                         Console.WriteLine("Вы выбрали создание новой игры.");
                         // Программа загадывает тайное число.
-                        info.number = Game.GeneratingNumber();
+                        info.Number = Game.GeneratingNumber();
                         Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны.");
                         Console.WriteLine("Введите 0 для завершения игры."); 
                         Console.WriteLine("Игра началась!");
                         // Не обнуляем строку, а перезаписываем на случай, если пользователь не ввёдет в игре ничего, но захочет сохранить её.
-                        info.textGame = "Сохранённая игра: ";
+                        info.TextGame = "Сохранённая игра: ";
                         // Обнуляем количество попыток.
-                        info.countAttempt = 0;
+                        info.CountAttempt = 0;
                         // Запускаем новую игру.
                         BullsАndCowsGame(ref info);  
                         break;
