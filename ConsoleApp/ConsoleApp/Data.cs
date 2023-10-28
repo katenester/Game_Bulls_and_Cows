@@ -2,6 +2,7 @@
 {
     class Data
     {
+        public const string path = @"c:\temp\1.txt";
         /// <summary>
         /// Метод инициализации структуры.
         /// </summary>
@@ -9,18 +10,17 @@
         public static void CheckUser(ref Info info)
         {
             // Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt.
-            string path = @"c:\temp\1.txt"; 
-            string? line; 
-            StreamReader sr = new(path);
+            string? line;
+            using StreamReader sr = new(path);
             // Пока не дойдём до конца файла или не найдём имя читаем файл построчно.
-            for (var i = 0; (line = sr.ReadLine()) != null; i++) 
+            for (var i = 0; (line = sr.ReadLine()) != null; i++)
             {
                 if ((i % 5 == 0) && (line == info.UserName))
                 {
                     // Строка является каждой пятой строкой, и она равна "UserName".
                     break;
                 }
-            }
+            } 
             // Если пользователя нет в бд, то добавляем его и инициализируем поля.
             if (line == null)
             {
@@ -29,12 +29,12 @@
             }
             // Если пользователь есть в бд.
             else
-            {   
+            {
                 // Поле info.userName уже проинициализоривано. В цикле поиска указатель в sr.ReadLine() поставлен на текст игры.
-                info.textGame = sr.ReadLine();
-                info.countAttempt = int.Parse(sr.ReadLine());
-                info.number = int.Parse(sr.ReadLine());
-                info.rating = double.Parse(sr.ReadLine());
+                info.TextGame = sr.ReadLine() ?? "";
+                info.CountAttempt = int.Parse(sr.ReadLine() ?? "");
+                info.Number = int.Parse(sr.ReadLine() ?? "");
+                info.Rating = double.Parse(sr.ReadLine() ?? "");
                 sr.Close();
             }
 
@@ -46,9 +46,8 @@
         /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
         public static void AddNewUser(Info info)
         {
-            string path = @"c:\temp\1.txt";
             // Добавляем true, чтобы информация записывалась в конец файла, а не заменяла содержимое.
-            StreamWriter sw = new(path, true); 
+            using StreamWriter sw = new(path, true); 
             sw.WriteLine(info.UserName);
             sw.WriteLine(info.TextGame);
             sw.WriteLine(info.CountAttempt);
@@ -94,10 +93,9 @@
         /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
         public static void Update(Info info)
         {
-            string path = @"c:\temp\1.txt";
             // Строка для чтения.
             string line; 
-            StreamReader sr = new(path);
+            using StreamReader sr = new(path);
             // Номер строки, на которой находится программа.
             var numberLine = 0; 
             for (var k = 0; (line = sr.ReadLine() ?? "") != null; k++) 
@@ -113,7 +111,7 @@
             }
             sr.Close();
             // Обновление текста игры.
-            RewriteLine(path, numberLine + 1, info.textGame);
+            RewriteLine(path, numberLine + 1, info.TextGame);
             // Обновление количества попыток.
             RewriteLine(path, numberLine + 2, (info.CountAttempt).ToString());
             // Обновление загаданного числа.
@@ -128,8 +126,7 @@
         /// <returns>Количество игроков в базе данных.</returns>
         public static int Counter() 
         {
-            string path = @"c:\temp\1.txt";
-            StreamReader sr = new(path);
+            using StreamReader sr = new(path);
             int counter = 0;
             for (var i = 0; (sr.ReadLine()) != null; i++)
             {
@@ -153,10 +150,9 @@
         {
             //Создание одномерного массива с рейтингами всех игроков.
             double[] rating = new double[Counter()]; 
-            string path = @"c:\temp\1.txt";
             // Строка для чтения.
             string line; 
-            StreamReader sr = new(path);
+            using StreamReader sr = new(path);
             // Номер текущего игрока.
             var j = 0;
             //Цикл работает ,пока не конец файла.
@@ -191,7 +187,7 @@
                 }
                 // Имя пользователя.
                 string name = "";
-                StreamReader sr1 = new(path);
+                using StreamReader sr1 = new(path);
                 // Цикл для поиска текущего рейтинга.
                 for (var k = 0; (line = sr1.ReadLine() ?? "") != null; k++) 
                 {

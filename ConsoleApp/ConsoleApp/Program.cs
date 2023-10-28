@@ -18,7 +18,7 @@
             Info info = new (); 
             // Инициализация пользователя.
             Person person = new(ref info);
-            person.Menu(ref info);
+            Person.Menu(ref info);
         }
     }
 }

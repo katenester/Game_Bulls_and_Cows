@@ -8,9 +8,8 @@
         /// <returns>Двухмерный массив, состоящий из имен и соответствующего рейтинга игровов, в порядке убывания рейтинга.</returns>
         public static string[,] BestPlayers()
         {
-            const int n = 2;
             // Инициализация двухмерного массива.
-            string[,] result = new string[Data.Counter(), n];
+            string[,] result = new string[Data.Counter(), 2];
             // Присваивание двухмерному массиву итоговый результат.
             result = Data.Rating(result);
             return result;
@@ -65,9 +64,8 @@
         {
             bull = 0;
             cow = 0;
-            const int k = 4;
             // Проход по строке, состоящей из цифр загаданного числа.
-            for (var i = 0; i < k; i++) 
+            for (var i = 0; i < 4; i++) 
             {
                 // При полном совпадении цифры загаданного числа с числом, введенным пользователем прибавляем число быков.
                 if (trial[i] == number[i])

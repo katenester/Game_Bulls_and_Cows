@@ -2,9 +2,9 @@
 {
     public struct Info
     {
-        public string userName { get; set; } 
+        public string UserName { get; set; } 
 
-        public string textGame { get; set; }
+        public string TextGame { get; set; }
 
         public int CountAttempt { get; set; }
 

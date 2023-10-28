@@ -53,7 +53,7 @@
         /// Логика игры (взаимодействие с пользователем). 
         /// </summary>
         /// <param name="info">Информация о пользователе.</param>
-        public void BullsАndCowsGame(ref Info info)
+        public static void BullsАndCowsGame(ref Info info)
         {
             // Это число, которое вводит пользователь.
             int trial;
@@ -153,7 +153,7 @@
             }
         }
 
-        public void Menu(ref Info info)
+        public static void Menu(ref Info info)
         {
             var flag = true;
             while (flag)
