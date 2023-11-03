@@ -21,7 +21,7 @@
                 UserName = Console.ReadLine();
             }
             // Присваим имя пользователя в структуре.
-            info.UserName=UserName;
+            info.UserName = UserName;
             // Game.User проиницализирует все поля структуры (т.е. возьмет данные в бд и закинет в структуру).
             // Функция ничего не возвращает т.к. мы передаём ссылку на структуру (ref).
             Game.User(ref info);
@@ -42,7 +42,7 @@
                     num = int.Parse(Console.ReadLine() ?? "");
                     return num;
                 }
-                catch(FormatException)
+                catch (FormatException)
                 {
                     Console.WriteLine("Некорректный формат введенных данных.");
                 }
@@ -97,7 +97,7 @@
                     // Обнуляем текст игры.
                     info.TextGame = "";
                     // Пересчитываем рейтинг и выходим.
-                    info.Rating += (double)1 / info.CountAttempt; 
+                    info.Rating += (double)1 / info.CountAttempt;
                     break;
                 }
                 // Если пользователь не отгадал число.
@@ -198,24 +198,24 @@
                         // Программа загадывает тайное число.
                         info.Number = Game.GeneratingNumber();
                         Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны.");
-                        Console.WriteLine("Введите 0 для завершения игры."); 
+                        Console.WriteLine("Введите 0 для завершения игры.");
                         Console.WriteLine("Игра началась!");
                         // Не обнуляем строку, а перезаписываем на случай, если пользователь не ввёдет в игре ничего, но захочет сохранить её.
                         info.TextGame = "Сохранённая игра: ";
                         // Обнуляем количество попыток.
                         info.CountAttempt = 0;
                         // Запускаем новую игру.
-                        BullsАndCowsGame(ref info);  
+                        BullsАndCowsGame(ref info);
                         break;
                     case 3:
-                        Console.WriteLine("Таблица лучших игроков:"); 
+                        Console.WriteLine("Таблица лучших игроков:");
                         //Ограничение 30 символов на столбец, чтобы таблица красиво выводилась.
                         Console.Write("{0, -30}", "Имя");
                         Console.WriteLine("{0, -30}", "Рейтинг");
                         // Объявляем и инициализируем двумерный массив.
-                        string[,] result = Game.BestPlayers(); 
+                        string[,] result = Game.BestPlayers();
                         // Выводим таблицу.
-                        for (var i = 0; i< Game.Counter();i++)
+                        for (var i = 0; i < Game.Counter(); i++)
                         {
                             Console.Write("{0, -30}", result[i, 0]);
                             Console.WriteLine("{0, -30}", Math.Round(Convert.ToDouble(result[i, 1]), 3));

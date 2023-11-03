@@ -14,11 +14,12 @@
             // Приветствие.
             Person.Time();
             Console.WriteLine(bull);
-            // Объявление объекта структуры Info.
-            Info info = new (); 
+            //Объявление объекта структуры Info.
+            Info info = new();
             // Инициализация пользователя.
-            Person person = new(ref info);
+            _ = new Person(ref info);
             Person.Menu(ref info);
+
         }
     }
 }
