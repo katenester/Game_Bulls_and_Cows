@@ -12,7 +12,7 @@
      *  ||----||
         ^^    ^^";
             // Приветствие.
-            Person.Time();
+            Person.GetTime();
             Console.WriteLine(bull);
             //Объявление объекта структуры Info.
             Info info = new();

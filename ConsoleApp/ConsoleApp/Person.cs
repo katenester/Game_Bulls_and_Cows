@@ -24,7 +24,7 @@
             info.UserName = UserName;
             // Game.User проиницализирует все поля структуры (т.е. возьмет данные в бд и закинет в структуру).
             // Функция ничего не возвращает т.к. мы передаём ссылку на структуру (ref).
-            Game.User(ref info);
+            Game.AuthorizeUser(ref info);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@
                 info.CountAttempt += 1;
                 // Проверка совпадает ли введеное пользователем число с секретным.
                 // Считаем количество быков и коров. 
-                Game.BullsАndCowsGame(trial.ToString(), info.Number.ToString(), out int bull, out int cow);
+                Game.CountBullsAndCows(trial.ToString(), info.Number.ToString(), out int bull, out int cow);
                 // Для сохранения (при необходимости) запоминаем текст игры.
                 info.TextGame += $"Попытка: {trial} Быков: {bull} Коров: {cow};";
                 // Если пользователь отгадал число.
@@ -108,13 +108,13 @@
                 }
             }
             // Обновляем данные о пользователе в бд.
-            Game.Update(info);
+            Game.UpdateInfo(info);
         }
 
         /// <summary>
         /// Получение текущего времени и приветствие пользователя.
         /// </summary>
-        public static void Time()
+        public static void GetTime()
         {
             DateTime dateTime = DateTime.Now;
             // Получение текущего часа
@@ -196,7 +196,7 @@
                     case 2:
                         Console.WriteLine("Вы выбрали создание новой игры.");
                         // Программа загадывает тайное число.
-                        info.Number = Game.GeneratingNumber();
+                        info.Number = Game.GenerateNumber();
                         Console.WriteLine("Число от 1000 до 9999 загадано. Цифры в числе уникальны.");
                         Console.WriteLine("Введите 0 для завершения игры.");
                         Console.WriteLine("Игра началась!");
@@ -213,9 +213,9 @@
                         Console.Write("{0, -30}", "Имя");
                         Console.WriteLine("{0, -30}", "Рейтинг");
                         // Объявляем и инициализируем двумерный массив.
-                        string[,] result = Game.BestPlayers();
+                        string[,] result = Game.GetBestPlayers();
                         // Выводим таблицу.
-                        for (var i = 0; i < Game.Counter(); i++)
+                        for (var i = 0; i < Game.CountUsers(); i++)
                         {
                             Console.Write("{0, -30}", result[i, 0]);
                             Console.WriteLine("{0, -30}", Math.Round(Convert.ToDouble(result[i, 1]), 3));

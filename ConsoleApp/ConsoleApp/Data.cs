@@ -3,11 +3,12 @@
     class Data
     {
         public const string path = @"c:\temp\1.txt";
+
         /// <summary>
         /// Метод инициализации структуры.
         /// </summary>
         /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
-        public static void CheckUser(ref Info info)
+        public static void InitializeStruct(ref Info info)
         {
             // Перед этим нужно создать папку temp на диске С и в ней блокнот 1.txt.
             string? line;
@@ -91,7 +92,7 @@
         /// Метод обновления информации о пользователе в бд.
         /// </summary>
         /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
-        public static void Update(Info info)
+        public static void UpdateInfo(Info info)
         {
             // Строка для чтения.
             string line; 
@@ -124,7 +125,7 @@
         /// Метод подсчёта количества игроков в базе данных.
         /// </summary>
         /// <returns>Количество игроков в базе данных.</returns>
-        public static int Counter() 
+        public static int CountUsers() 
         {
             using StreamReader sr = new(path);
             int counter = 0;
@@ -146,10 +147,10 @@
         /// <param name="result">Двумерный массив для хранения игровых имен и рейтингов игроков.</param>
         /// <returns>Двухмерный массив, состоящий из имен и соответствующего рейтинга игровов,
         /// в порядке убывания рейтинга.</returns>
-        public static string[,] Rating(string[,] result)
+        public static string[,] GetRating(string[,] result)
         {
             //Создание одномерного массива с рейтингами всех игроков.
-            double[] rating = new double[Counter()]; 
+            double[] rating = new double[CountUsers()]; 
             // Строка для чтения.
             string line; 
             using StreamReader sr = new(path);

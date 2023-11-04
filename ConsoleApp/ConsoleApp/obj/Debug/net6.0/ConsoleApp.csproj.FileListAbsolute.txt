@@ -128,3 +128,17 @@ C:\Users\Tanya\Desktop\л5\ConsoleApp\ConsoleApp\obj\Debug\net6.0\refint\Console
 C:\Users\Tanya\Desktop\л5\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.pdb
 C:\Users\Tanya\Desktop\л5\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.genruntimeconfig.cache
 C:\Users\Tanya\Desktop\л5\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ref\ConsoleApp.dll
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\bin\Debug\net6.0\ConsoleApp.exe
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\bin\Debug\net6.0\ConsoleApp.deps.json
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\bin\Debug\net6.0\ConsoleApp.runtimeconfig.json
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\bin\Debug\net6.0\ConsoleApp.dll
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\bin\Debug\net6.0\ConsoleApp.pdb
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.AssemblyInfoInputs.cache
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.AssemblyInfo.cs
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.csproj.CoreCompileInputs.cache
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.dll
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\refint\ConsoleApp.dll
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.pdb
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ConsoleApp.genruntimeconfig.cache
+C:\Users\Tanya\Desktop\л6\ConsoleApp\ConsoleApp\obj\Debug\net6.0\ref\ConsoleApp.dll

@@ -6,12 +6,12 @@
         /// Метод для составления таблицы лучших игроков.
         /// </summary>
         /// <returns>Двухмерный массив, состоящий из имен и соответствующего рейтинга игровов, в порядке убывания рейтинга.</returns>
-        public static string[,] BestPlayers()
+        public static string[,] GetBestPlayers()
         {
             // Инициализация двухмерного массива.
-            string[,] result = new string[Data.Counter(), 2];
+            string[,] result = new string[Data.CountUsers(), 2];
             // Присваивание двухмерному массиву итоговый результат.
-            result = Data.Rating(result);
+            result = Data.GetRating(result);
             return result;
         }
 
@@ -19,16 +19,16 @@
         /// Метод для авторизации/авторизации пользователя.
         /// </summary>
         /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
-        public static void User(ref Info info)
+        public static void AuthorizeUser(ref Info info)
         {
-            Data.CheckUser(ref info);
+            Data.InitializeStruct(ref info);
         }
 
         /// <summary>
         /// Метод генерации рандомного числа. 
         /// </summary>
         /// <returns>Рандомное четырехзначное число.</returns>
-        public static int GeneratingNumber()
+        public static int GenerateNumber()
         {
             Random random = new();
             int n;
@@ -54,13 +54,13 @@
         }
 
         /// <summary>
-        /// Игра быки и коровы.
+        /// Подсчёт быков и коров в числе, введённом пользователем.
         /// </summary>
         /// <param name="trial">Введеное число пользователем/попытка.</param>
         /// <param name="number">Загаданное число.</param>
         /// <param name="bull">Количество полных совпадений (количество быков).</param>
         /// <param name="cow">Количество угаданного без совпадения с их позициями цифр (количество коров).</param>
-        public static void BullsАndCowsGame(string trial, string number, out int bull, out int cow)
+        public static void CountBullsAndCows(string trial, string number, out int bull, out int cow)
         {
             bull = 0;
             cow = 0;
@@ -86,18 +86,18 @@
         /// Обновление данных.
         /// </summary>
         /// <param name="info">Структура, в которой хранится информация о пользователе.</param>
-        public static void Update(Info info) 
+        public static void UpdateInfo(Info info) 
         {
-            Data.Update(info);
+            Data.UpdateInfo(info);
         }
 
         /// <summary>
         /// Количество пользователей из базы данных.
         /// </summary>
         /// <returns>Количество пользователей.</returns>
-        public static int Counter() 
+        public static int CountUsers() 
         {
-            return Data.Counter();
+            return Data.CountUsers();
         }
     }
 }
